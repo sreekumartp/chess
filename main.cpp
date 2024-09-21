@@ -166,16 +166,81 @@ vector<Point> compute_coordinates_right_down(int x, int y, int max_n) {
 }
 
 
+vector<Point> compute_knights_moves(int x, int y, int max_n) {
+    vector<Point> coordinates;
+
+    int new_x=0;
+    int new_y=0;
+
+    new_x = x+1, new_y=y+2;
+    if(new_x<=8 && new_y<=8)
+    {
+        coordinates.push_back({new_x,new_y});
+    }
+
+  
+    new_x = x+2, new_y=y+1;
+    if(new_x<=8 && new_y<=8)
+    {
+        coordinates.push_back({new_x,new_y});
+    }
+
+
+
+    new_x= x+2, new_y=y-1;
+    if(new_x<=8 && new_y>=1)
+    {
+        coordinates.push_back({new_x,new_y});
+    }    
+    new_x=x+1, new_y=y-2;
+    if(new_x<=8 && new_y>=1)
+    {
+        coordinates.push_back({new_x,new_y});
+    }    
+    new_x=x-2, new_y=y-1;
+    if(new_x>=1 && new_y>=1)
+    {
+        coordinates.push_back({new_x,new_y});
+    }    
+    new_x=x-1, new_y=y-2;
+    if(new_x>=1 && new_y>=1)
+    {
+        coordinates.push_back({new_x,new_y});
+    }    
+    new_x=x-2, new_y=y+1;
+    if(new_x>=1 && new_y<=8)
+    {
+        coordinates.push_back({new_x,new_y});
+    }    
+    new_x=x-1, new_y=y+2;
+    if(new_x>=1 && new_y<=8)
+    {
+        coordinates.push_back({new_x,new_y});
+    }
+
+
+    return coordinates;
+}
 
 
 
 int main() {
-    int x = 4;
-    int y = 4;
+    int x = 8;
+    int y = 8;
     int max_n = 8; 
     
     cout << "Initial position: (" << x << ", " << y << ")" << endl;
 
+   
+    // Compute possible coordinates vertically up
+    vector<Point> possible_coordinates_knight = compute_knights_moves(x, y, max_n);
+    cout << "Possible possible_coordinates_up: ";
+    for (const auto& point : possible_coordinates_knight) {
+        cout << "(" << point.x << ", " << point.y << ") ";
+    }
+    cout << endl;
+
+#if 0
     // Compute possible coordinates vertically up
     vector<Point> possible_coordinates_up = compute_coordinates_up(x, y, max_n);
     cout << "Possible possible_coordinates_up: ";
@@ -244,6 +309,6 @@ int main() {
     }
     cout << endl;
     
-
+#endif
     return 0;
 }
