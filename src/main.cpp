@@ -1,8 +1,8 @@
 #include <iostream>
-#include "include/chessrules.h"
+#include "chessrules.h"
 
 int main() {
-    int x = 3;
+    int x = 5;
     int y = 3;
     int max_n = 8; 
     

@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add the executable
-#add_executable(chessrules main.cpp chessrules.cpp)
+add_executable(chessrules src/main.cpp src/chessrules.cpp)
 
 # Include directories if necessary
 include_directories(include)
@@ -20,7 +20,7 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # Add the test executable
-add_executable(test_chessrules test/test_chessrules.cpp chessrules.cpp)
+add_executable(test_chessrules test/test_chessrules.cpp src/chessrules.cpp)
 
 # Link the test executable with the main project and GoogleTest
 #target_link_libraries(test_chessrules gtest gtest_main)0
