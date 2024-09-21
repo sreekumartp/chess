@@ -8,7 +8,22 @@ int main() {
     
     std::cout << "Initial position: (" << x << ", " << y << ")" << std::endl;
 
-   
+
+
+//Step 1:  Identify the possible moves of selected piece
+//Step 2:  Pick next available position in the possible moves list
+//Step 3:  Check if position is occupied in board layout
+//Step 4:  If position is not occupied, mark as legal move
+//Step 4a: go to Step 2 (pick next available)
+//Step 5: If position is occupied , check if piece is enemy piece.
+//Step 6a: If piece is enemy then mark as legal move and mark as capture move
+//Step 7: stop further check
+
+
+
+
+
+#if 0   
     // Compute knight moves
     std::vector<Point> possible_coordinates_knight = compute_knights_moves(x, y, max_n);
     std::cout << "Possible knights_moves: ";
@@ -17,7 +32,7 @@ int main() {
     }
     std::cout << std::endl;
 
-#if 1
+
     // Compute possible coordinates vertically up
     std::vector<Point> possible_coordinates_up = compute_coordinates_up(x, y, max_n);
     std::cout << "Possible possible_coordinates_up: ";

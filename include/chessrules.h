@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef CHESSRULES_H
+#define CHESSRULES_H
 
 #include <vector>
 
@@ -32,4 +32,4 @@ std::vector<Point> compute_coordinates_right_down(int x, int y, int max_n);
 // Function to compute the possible moves of a knight
 std::vector<Point> compute_knights_moves(int x, int y, int max_n);
 
-#endif // MAIN_H
+#endif // CHESSRULES_H
