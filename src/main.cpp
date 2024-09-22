@@ -1,5 +1,7 @@
 #include <iostream>
 #include "chessrules.h"
+#include "chesspiece.h"
+#include "chessboard.h"
 
 int main() {
     int x = 5;
@@ -7,7 +9,9 @@ int main() {
     int max_n = 8; 
     
     std::cout << "Initial position: (" << x << ", " << y << ")" << std::endl;
+    Board board;
 
+    
 
 
 //Step 1:  Identify the possible moves of selected piece

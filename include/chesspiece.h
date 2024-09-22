@@ -1,44 +1,25 @@
 #ifndef CHESSPIECE_H
 #define CHESSPIECE_H
 
-// Your code goes here
-
 #include <string>
-#include <vector>
-#include <array>
 
-// Structure to represent a point
-struct Point {
-    int x, y;
-    // Define the equality operator
-    bool operator==(const Point& other) const {
-        return x == other.x && y == other.y;
-    };
+#include "common.h"
+
+class ChessPiece {
+protected:
+    std::string name;
+    bool isWhite;
+    Point position;
+    // make the constructor protected so that the class cannot be instantiated directly
+    ChessPiece(std::string name, bool isWhite, Point initialPosition);
+public:
+   
+    virtual ~ChessPiece();
+    std::string getName() const;
+    bool getIsWhite() const;
+    Point getPosition() const;
+    void setPosition(Point newPosition);
+ 
 };
-
-class ChessPiece{
-
-    private:
-
-        std::string name;
-        bool isWhite;
-        Point position;  
-
-    public:
-            ChessPiece(std::string name, bool isWhite, Point initialPosition) : name(name), isWhite(isWhite),
-             position(initialPosition) {}
-            std::string getName(){return name;};
-            bool getIsWhite(){return isWhite;};
-            Point getPoint(){return Point();};
-
-            // Add a setter for the position
-            void setPosition(Point newPosition) { position = newPosition; }
-
-            virtual std::vector<Point> getLegalMoves(const std::array<std::array<ChessPiece*, 8>, 8>& board) const = 0; 
-
-    
-
-};
-
 
 #endif // CHESSPIECE_H

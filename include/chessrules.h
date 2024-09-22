@@ -2,16 +2,7 @@
 #define CHESSRULES_H
 
 #include <vector>
-
-// Structure to represent a point
-struct Point {
-    int x, y;
-    // Define the equality operator
-    bool operator==(const Point& other) const {
-        return x == other.x && y == other.y;
-    }
-
-};
+#include "common.h"
 
 // Function to compute coordinates vertically up of a given point
 std::vector<Point> compute_coordinates_up(int x, int y, int max_n);
@@ -32,4 +23,4 @@ std::vector<Point> compute_coordinates_right_down(int x, int y, int max_n);
 // Function to compute the possible moves of a knight
 std::vector<Point> compute_knights_moves(int x, int y, int max_n);
 
-#endif // CHESSRULES_H
+#endif // MAIN_H
