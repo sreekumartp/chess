@@ -2,22 +2,29 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: configure
-      run: ./configure
-    - name: make
+    - uses: actions/checkout@v3
+
+    # If 'configure' needs generation
+    - name: Generate configure script
+      run: autoconf 
+
+    - name: Configure
+      run: ./configure 
+
+    - name: Build
       run: make
-    - name: make check
+
+    - name: Test
       run: make check
-    - name: make distcheck
+
+    - name: Package
       run: make distcheck
