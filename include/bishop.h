@@ -1,5 +1,5 @@
-#ifndef PAWN_H
-#define PAWN_H
+#ifndef BISHOP_H
+#define BISHOP_H
 
 // #include "../include/chesspiece.h"
 // Your code here
@@ -7,22 +7,22 @@
 #include "chesspiece.h"
 #include "common.h"
 
-class Pawn:ChessPiece{
+class Bishop:ChessPiece{
 
 
 public:
 
-    Pawn(std::string name , bool isWhite, Point initialPosition);
+    Bishop(std::string name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
-    ~Pawn();
+    ~Bishop();
 
     Point getPosition() const;
-    bool getIsWhite() const;
+
     void setPosition(Point newPosition);
 
 };
 
 
 
-#endif // PAWN_H
+#endif // BISHOP_H

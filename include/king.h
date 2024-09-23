@@ -1,5 +1,5 @@
-#ifndef PAWN_H
-#define PAWN_H
+#ifndef KING_H
+#define KING_H
 
 // #include "../include/chesspiece.h"
 // Your code here
@@ -7,15 +7,15 @@
 #include "chesspiece.h"
 #include "common.h"
 
-class Pawn:ChessPiece{
+class King:ChessPiece{
 
 
 public:
 
-    Pawn(std::string name , bool isWhite, Point initialPosition);
+    King(std::string name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
-    ~Pawn();
+    ~King();
 
     Point getPosition() const;
     bool getIsWhite() const;
@@ -25,4 +25,4 @@ public:
 
 
 
-#endif // PAWN_H
+#endif // KING_H

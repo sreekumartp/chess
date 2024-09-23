@@ -22,6 +22,12 @@ return position;
 
 }
 
+bool Pawn::getIsWhite() const
+{
+
+    return isWhite;
+}
+
 void Pawn::setPosition(Point newPosition)
 {
 

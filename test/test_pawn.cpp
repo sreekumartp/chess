@@ -12,6 +12,7 @@ TEST(PawnTest, GetName) {
     pt.y = 1;
     Pawn pawn("Pawn1", true, pt);
     EXPECT_EQ(pawn.getName(), "Pawn1");
+    EXPECT_TRUE(pawn.getIsWhite());
 }
 
 TEST(PawnTest, GetPosition) {
