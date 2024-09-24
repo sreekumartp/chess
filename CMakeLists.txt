@@ -19,6 +19,8 @@ FetchContent_Declare(
 # Add GTest to the build
 FetchContent_MakeAvailable(googletest)
 
+# Set the cppcheck path
+set(CMAKE_CXX_CPPCHECK "cppcheck;--enable=warning,performance,portability,information,missingInclude")
 
 # Disable -Werror for Google Test
 set_target_properties(gtest PROPERTIES COMPILE_FLAGS "-Wno-error")
