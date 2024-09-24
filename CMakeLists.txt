@@ -7,6 +7,21 @@ project(chessrules)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+
+include(FetchContent)
+
+# Download GTest if not present
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/releases/download/v1.15.2/googletest-1.15.2.tar.gz
+)
+
+# Add GTest to the build
+FetchContent_MakeAvailable(googletest)
+
+
+# Disable -Werror for Google Test
+set_target_properties(gtest PROPERTIES COMPILE_FLAGS "-Wno-error")
 # Add the executable
 add_executable(chessrules src/main.cpp src/chessboard.cpp src/chessrules.cpp src/chesspiece.cpp src/pawn.cpp)
 
