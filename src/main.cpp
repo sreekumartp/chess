@@ -1,6 +1,4 @@
 #include <iostream>
-#include "chessrules.h"
-#include "chesspiece.h"
 #include "chessboard.h"
 
 int main() {
@@ -11,7 +9,8 @@ int main() {
     std::cout << "Initial position: (" << x << ", " << y << ")" << std::endl;
     Board board;
 
-    
+    board.InitialiseBoard();
+    board.printBoard();
 
 
 //Step 1:  Identify the possible moves of selected piece

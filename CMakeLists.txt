@@ -23,7 +23,7 @@ FetchContent_MakeAvailable(googletest)
 # Disable -Werror for Google Test
 set_target_properties(gtest PROPERTIES COMPILE_FLAGS "-Wno-error")
 # Add the executable
-add_executable(chessrules src/main.cpp src/chessboard.cpp src/chessrules.cpp src/chesspiece.cpp src/pawn.cpp)
+add_executable(chesstest src/main.cpp src/chessboard.cpp src/chessrules.cpp src/chesspiece.cpp src/pawn.cpp src/knight.cpp src/bishop.cpp src/rook.cpp src/queen.cpp src/king.cpp)
 
 # Include directories if necessary
 include_directories(include)
@@ -42,7 +42,7 @@ add_executable(test_bishop test/test_bishop.cpp src/chesspiece.cpp src/bishop.cp
 add_executable(test_rook test/test_rook.cpp src/chesspiece.cpp src/rook.cpp)
 add_executable(test_queen test/test_queen.cpp src/chesspiece.cpp src/queen.cpp)
 add_executable(test_king test/test_king.cpp src/chesspiece.cpp src/king.cpp)
-
+add_executable(test_chessboard  test/test_chessboard.cpp src/chessboard.cpp src/chesspiece.cpp src/pawn.cpp src/knight.cpp src/bishop.cpp src/rook.cpp src/queen.cpp src/king.cpp)
 # Link the test executable with the main project and GoogleTest
 #target_link_libraries(test_chessrules gtest gtest_main)0
 
@@ -54,6 +54,7 @@ target_link_libraries(test_bishop ${GTEST_LIBRARIES} pthread)
 target_link_libraries(test_rook ${GTEST_LIBRARIES} pthread)
 target_link_libraries(test_queen ${GTEST_LIBRARIES} pthread)
 target_link_libraries(test_king ${GTEST_LIBRARIES} pthread)
+target_link_libraries(test_chessboard ${GTEST_LIBRARIES} pthread)
 
 # Add the test to CTest
 add_test(NAME ChessRulesTest COMMAND test_chessrules)
@@ -63,3 +64,4 @@ add_test(NAME BishopTest COMMAND test_bishop)
 add_test(NAME RookTest COMMAND test_rook)
 add_test(NAME QueenTest COMMAND test_queen)
 add_test(NAME KingTest COMMAND test_king)
+add_test(NAME ChessBoardTest COMMAND test_chessboard)

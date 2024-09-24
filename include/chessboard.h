@@ -15,7 +15,7 @@ class Board{
         Board();
         ~Board();
         ChessPiece* getPiece(Point position) const;
-        void setPiece(Point position, std::unique_ptr<ChessPiece> piece);
+        void setPiece(std::unique_ptr<ChessPiece> piece);
         void movePiece(Point start, Point end);
         void printBoard() const;
         void clearBoard();

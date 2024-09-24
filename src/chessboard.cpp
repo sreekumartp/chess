@@ -1,11 +1,25 @@
 #include "chessboard.h"
-
+#include "chesspiece.h"
 #include <array>
 #include <iostream>
 #include <memory>
 
+#include "pawn.h"
+#include <cassert>
+
 // Constructor
-Board::Board() {}
+Board::Board() {
+
+    // Initialize the board with nullptr or appropriate ChessPiece objects
+    for (auto& row : board) {
+        for (auto& cell : row) {
+            cell = nullptr;
+        }
+    }
+
+
+
+}
 
 // Destructor. Delete all the pieces on the board
 Board::~Board() {
@@ -13,7 +27,22 @@ Board::~Board() {
 }
 
 bool Board::InitialiseBoard() {
-    // Create black pawns
+
+
+       // Create black pawns
+    for (int col = 0; col < 8; ++col) {
+        //Pawn* pawn = new Pawn("Black Pawn", false, Point(1, col));
+        //ChessPiece* piece = static_cast<ChessPiece*>(pawn);  // Explicit conversion
+        setPiece(std::make_unique<Pawn>("BP", false, Point(1, col)));
+    }
+    
+
+    // Create white pawns
+    for (int col = 0; col < 8; ++col) {
+        //Pawn* pawn = new Pawn("Black Pawn", false, Point(1, col));
+        //ChessPiece* piece = static_cast<ChessPiece*>(pawn);  // Explicit conversion
+        setPiece(std::make_unique<Pawn>("WP", true, Point(6, col)));
+    }
 
     // Create black king
 
@@ -35,9 +64,14 @@ ChessPiece* Board::getPiece(Point position) const {
     return board[x][y].get();
 }
 
-void Board::setPiece(Point position, std::unique_ptr<ChessPiece> piece) {
-    int x = position.x;
-    int y = position.y;
+void Board::setPiece(std::unique_ptr<ChessPiece> piece) {
+
+    int x = piece->getPosition().x;
+    int y = piece->getPosition().y;
+
+    assert(x >= 0 && x < 8);
+    assert(y >= 0 && y < 8);
+
     board[x][y] = std::move(piece);
 }
 
@@ -50,7 +84,7 @@ void Board::movePiece(Point start, Point end) {
 }
 
 void Board::printBoard() const {
-    Point pt;
+    Point pt(1,1);
 
     for (int row = 0; row < 8; row++) {
         for (int col = 0; col < 8; col++) {

@@ -1,4 +1,4 @@
-#include "../include/chesspiece.h"
+#include "chesspiece.h"
 
 
 //ChessPiece class implementation

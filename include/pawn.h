@@ -7,7 +7,7 @@
 #include "chesspiece.h"
 #include "common.h"
 
-class Pawn:ChessPiece{
+class Pawn:public ChessPiece{
 
 
 public:

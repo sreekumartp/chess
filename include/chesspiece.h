@@ -10,11 +10,13 @@ protected:
     std::string name;
     bool isWhite;
     Point position;
-    // make the constructor protected so that the class cannot be instantiated directly
-    ChessPiece(std::string name, bool isWhite, Point initialPosition);
+ 
 public:
-   
-    virtual ~ChessPiece();
+    
+    ChessPiece(std::string name, bool isWhite, Point initialPosition);
+ 
+    virtual ~ChessPiece();  // Add a virtual destructor
+
     std::string getName() const;
     bool getIsWhite() const;
     Point getPosition() const;
