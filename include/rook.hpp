@@ -1,11 +1,11 @@
 #ifndef ROOK_H
 #define ROOK_H
 
-// #include "../include/chesspiece.h"
+// #include "../include/chesspiece.hpp"
 // Your code here
 #include <string>
-#include "chesspiece.h"
-#include "common.h"
+#include "chesspiece.hpp"
+#include "common.hpp"
 
 class Rook:public ChessPiece{
 

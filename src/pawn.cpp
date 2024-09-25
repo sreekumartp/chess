@@ -1,4 +1,4 @@
-#include "pawn.h"
+#include "pawn.hpp"
 
 
 // call ChessPiece constructor to initialize the variables.

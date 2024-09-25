@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "chessboard.h"
-#include "chesspiece.h"
+#include "chessboard.hpp"
+#include "chesspiece.hpp"
 
 
 class ChessBoardTest : public ::testing::Test {

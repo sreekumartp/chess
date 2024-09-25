@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "rook.h"
+#include "rook.hpp"
 
 TEST(RookTest, GetName) {
     Point initialPosition = {0, 0};

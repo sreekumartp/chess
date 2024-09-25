@@ -2,7 +2,7 @@
 #define CHESSRULES_H
 
 #include <vector>
-#include "common.h"
+#include "common.hpp"
 
 // Function to compute coordinates vertically up of a given point
 std::vector<Point> compute_coordinates_up(int x, int y, int max_n);

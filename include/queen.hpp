@@ -1,11 +1,11 @@
 #ifndef QUEEN_H
 #define QUEEN_H
 
-// #include "../include/chesspiece.h"
+// #include "../include/chesspiece.hpp"
 // Your code here
 
 #include <string>
-#include "chesspiece.h"
+#include "chesspiece.hpp"
 
 
 class Queen:public ChessPiece

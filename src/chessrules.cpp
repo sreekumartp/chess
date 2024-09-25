@@ -1,5 +1,5 @@
 #include <vector>
-#include "chessrules.h"
+#include "chessrules.hpp"
 
 
 

@@ -1,4 +1,4 @@
-#include "knight.h"
+#include "knight.hpp"
 
 
 // call ChessPiece constructor to initialize the variables.

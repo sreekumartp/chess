@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "king.h"
+#include "king.hpp"
 
 TEST(KingTest, GetName) {
     Point initialPosition = {0, 0};

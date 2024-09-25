@@ -1,4 +1,4 @@
-#include "queen.h"
+#include "queen.hpp"
 
 
 // call ChessPiece constructor to initialize the variables.

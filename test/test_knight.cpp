@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "knight.h"
+#include "knight.hpp"
 
 TEST(KnightTest, Initialization) {
     Point initialPosition = {0, 1};

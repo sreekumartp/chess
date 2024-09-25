@@ -1,12 +1,12 @@
 #ifndef PAWN_H
 #define PAWN_H
 
-// #include "../include/chesspiece.h"
+// #include "../include/chesspiece.hpp"
 // Your code here
 
 #include <string>
-#include "chesspiece.h"
-#include "common.h"
+#include "chesspiece.hpp"
+#include "common.hpp"
 
 class Pawn:public ChessPiece{
 
