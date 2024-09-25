@@ -1,5 +1,5 @@
 #include <iostream>
-#include "chessboard.h"
+#include "chessboard.hpp"
 
 int main() {
     int x = 5;

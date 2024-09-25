@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "common.h"
+#include "common.hpp"
 
 class ChessPiece {
 protected:

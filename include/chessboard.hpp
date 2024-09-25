@@ -4,8 +4,8 @@
 // Your code here
 #include <memory>
 #include <array>
-#include "chesspiece.h"
-#include "common.h"
+#include "chesspiece.hpp"
+#include "common.hpp"
 
 
 class Board{

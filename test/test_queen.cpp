@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "queen.h"
+#include "queen.hpp"
 
 TEST(QueenTest, GetName) {
     Point initialPosition = {0, 3};

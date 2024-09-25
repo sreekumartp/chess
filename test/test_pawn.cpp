@@ -2,7 +2,7 @@
 #define TEST_PAWN_H
 
 #include <gtest/gtest.h>
-#include "pawn.h"
+#include "pawn.hpp"
 
 
 

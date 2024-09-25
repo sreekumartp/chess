@@ -1,4 +1,4 @@
-#include "rook.h"
+#include "rook.hpp"
 
 
 // call ChessPiece constructor to initialize the variables.

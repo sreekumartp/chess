@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "bishop.h"
+#include "bishop.hpp"
 
 // Test fixture for Bishop class
 class BishopTest : public ::testing::Test {

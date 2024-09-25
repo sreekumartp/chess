@@ -1,4 +1,4 @@
-#include "bishop.h"
+#include "bishop.hpp"
 
 
 // call ChessPiece constructor to initialize the variables.

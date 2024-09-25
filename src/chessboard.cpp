@@ -1,15 +1,15 @@
-#include "chessboard.h"
-#include "chesspiece.h"
+#include "chessboard.hpp"
+#include "chesspiece.hpp"
 #include <array>
 #include <iostream>
 #include <memory>
 
-#include "pawn.h"
-#include "king.h"
-#include "queen.h"
-#include "knight.h"
-#include "bishop.h"
-#include "rook.h"
+#include "pawn.hpp"
+#include "king.hpp"
+#include "queen.hpp"
+#include "knight.hpp"
+#include "bishop.hpp"
+#include "rook.hpp"
 
 #include <cassert>
 

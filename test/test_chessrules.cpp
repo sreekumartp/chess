@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <gtest/gtest.h>
-#include "../include/chessrules.h"
+#include "../include/chessrules.hpp"
 
 // Test for compute_knights_moves function
 TEST(ChessRulesTest, ComputeKnightsMoves) {

@@ -1,12 +1,12 @@
 #ifndef KNIGHT_H
 #define KNIGHT_H
 
-// #include "../include/chesspiece.h"
+// #include "../include/chesspiece.hpp"
 // Your code here
 
 #include <string>
-#include "common.h"
-#include "chesspiece.h"
+#include "common.hpp"
+#include "chesspiece.hpp"
 
 
 class Knight : public ChessPiece
