@@ -12,7 +12,7 @@ class Rook:public ChessPiece{
 
 public:
 
-    Rook(std::string name , bool isWhite, Point initialPosition);
+    Rook(const std::string& name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
     ~Rook();

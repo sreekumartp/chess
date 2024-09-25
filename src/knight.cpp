@@ -2,7 +2,7 @@
 
 
 // call ChessPiece constructor to initialize the variables.
-Knight::Knight(std::string name , bool isWhite, Point initialPosition) 
+Knight::Knight(const std::string& name , bool isWhite, Point initialPosition) 
     : ChessPiece(name,isWhite,initialPosition){}
 
 Knight::~Knight()

@@ -2,7 +2,7 @@
 
 
 // call ChessPiece constructor to initialize the variables.
-Rook::Rook(std::string name , bool isWhite, Point initialPosition) 
+Rook::Rook(const std::string& name , bool isWhite, Point initialPosition) 
     : ChessPiece(name,isWhite,initialPosition){}
 
 Rook::~Rook()

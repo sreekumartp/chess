@@ -2,7 +2,7 @@
 
 
 // call ChessPiece constructor to initialize the variables.
-Pawn::Pawn(std::string name , bool isWhite, Point initialPosition) 
+Pawn::Pawn(const std::string& name , bool isWhite, Point initialPosition) 
     : ChessPiece(name,isWhite,initialPosition){}
 
 Pawn::~Pawn()

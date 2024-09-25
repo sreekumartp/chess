@@ -15,7 +15,7 @@ class Knight : public ChessPiece
 
 public:
 
-    Knight(std::string name , bool isWhite, Point initialPosition);
+    Knight(const std::string& name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
     ~Knight();

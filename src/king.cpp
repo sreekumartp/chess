@@ -2,7 +2,7 @@
 
 
 // call ChessPiece constructor to initialize the variables.
-King::King(std::string name , bool isWhite, Point initialPosition) 
+King::King(const std::string& name , bool isWhite, Point initialPosition) 
     : ChessPiece(name,isWhite,initialPosition){}
 
 King::~King()
