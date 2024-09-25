@@ -4,10 +4,12 @@
 // #include "../include/chesspiece.h"
 // Your code here
 
+#include <string>
 #include "chesspiece.h"
-#include "common.h"
 
-class Queen:ChessPiece{
+
+class Queen:public ChessPiece
+{
 
 
 public:

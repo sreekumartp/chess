@@ -5,6 +5,12 @@
 #include <memory>
 
 #include "pawn.h"
+#include "king.h"
+#include "queen.h"
+#include "knight.h"
+#include "bishop.h"
+#include "rook.h"
+
 #include <cassert>
 
 // Constructor
@@ -37,6 +43,22 @@ bool Board::InitialiseBoard() {
     }
     
 
+
+    // Create black king
+    setPiece(std::make_unique<King>("BK", false, Point(0, 4)));
+    // Create black queen
+    setPiece(std::make_unique<Queen>("BQ", false, Point(0, 3)));
+    // Create black knight
+    setPiece(std::make_unique<Knight>("BN", false, Point(0, 1)));
+    setPiece(std::make_unique<Knight>("BN", false, Point(0, 6)));
+    // Create black bishop
+    setPiece(std::make_unique<Bishop>("BB", false, Point(0, 2)));
+    setPiece(std::make_unique<Bishop>("BB", false, Point(0, 5)));   
+    // Create black rook
+    setPiece(std::make_unique<Rook>("BR", false, Point(0, 0)));
+    setPiece(std::make_unique<Rook>("BR", false, Point(0, 7)));
+
+
     // Create white pawns
     for (int col = 0; col < 8; ++col) {
         //Pawn* pawn = new Pawn("Black Pawn", false, Point(1, col));
@@ -44,15 +66,25 @@ bool Board::InitialiseBoard() {
         setPiece(std::make_unique<Pawn>("WP", true, Point(6, col)));
     }
 
-    // Create black king
+    // Create white bishop
+    setPiece(std::make_unique<Bishop>("WB", true, Point(7, 2)));
+    setPiece(std::make_unique<Bishop>("WB", true, Point(7, 5)));
 
-    // Create black queen
 
-    // Create black knight
+    //Create white knight
+    setPiece(std::make_unique<Knight>("WN", true, Point(7, 1)));
+    setPiece(std::make_unique<Knight>("WN", true, Point(7, 6)));
+    //Create white rook
+    setPiece(std::make_unique<Rook>("WR", true, Point(7, 0)));
+    setPiece(std::make_unique<Rook>("WR", true, Point(7, 7)));
 
-    // Create black bishop
+    //Create white queen
+    setPiece(std::make_unique<Queen>("WQ", true, Point(7, 3)));
 
-    // Create black rook
+    //Create white king
+    setPiece(std::make_unique<King>("WK", true, Point(7, 4)));
+
+    
     return true;
 }
 
@@ -92,10 +124,11 @@ void Board::printBoard() const {
 
             if (cp) {
                 pt = cp->getPosition();
-                std::cout << cp->getName() << ',' << (cp->getIsWhite() ? "White" : "Black")
-                                    << ',' << '[' << pt.x << ',' << pt.y << ']' << " ";
+                // std::cout << cp->getName() << ',' << (cp->getIsWhite() ? "White" : "Black")
+                //                     << ',' << '[' << pt.x << ',' << pt.y << ']' << " ";
+                std::cout << cp->getName() << ' ';
             } else {
-                std::cout << "Empty";
+                std::cout << "__" << ' ';
             }
         }
         std::cout << std::endl;

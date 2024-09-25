@@ -3,11 +3,11 @@
 
 // #include "../include/chesspiece.h"
 // Your code here
-
+#include <string>
 #include "chesspiece.h"
 #include "common.h"
 
-class Rook:ChessPiece{
+class Rook:public ChessPiece{
 
 
 public:

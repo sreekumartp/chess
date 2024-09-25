@@ -7,7 +7,7 @@
 #include "chesspiece.h"
 #include "common.h"
 
-class Bishop:ChessPiece{
+class Bishop:public ChessPiece{
 
 
 public:

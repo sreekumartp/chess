@@ -20,15 +20,17 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 # Set the cppcheck path
-set(CMAKE_CXX_CPPCHECK "cppcheck;--enable=warning,performance,portability,information,missingInclude")
+set(CMAKE_CXX_CPPCHECK "cppcheck;--enable=warning,performance,portability,information;--language=c++")
+
+# Include directories if necessary
+include_directories(include)
 
 # Disable -Werror for Google Test
 set_target_properties(gtest PROPERTIES COMPILE_FLAGS "-Wno-error")
 # Add the executable
 add_executable(chesstest src/main.cpp src/chessboard.cpp src/chessrules.cpp src/chesspiece.cpp src/pawn.cpp src/knight.cpp src/bishop.cpp src/rook.cpp src/queen.cpp src/king.cpp)
 
-# Include directories if necessary
-include_directories(include)
+
 
 # Enable testing
 enable_testing()

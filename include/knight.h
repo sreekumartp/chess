@@ -4,11 +4,14 @@
 // #include "../include/chesspiece.h"
 // Your code here
 
-#include "chesspiece.h"
+#include <string>
 #include "common.h"
+#include "chesspiece.h"
 
-class Knight:ChessPiece{
 
+class Knight : public ChessPiece
+{
+ 
 
 public:
 

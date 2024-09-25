@@ -4,6 +4,7 @@
 // #include "../include/chesspiece.h"
 // Your code here
 
+#include <string>
 #include "chesspiece.h"
 #include "common.h"
 
