@@ -13,7 +13,7 @@ class Pawn:public ChessPiece{
 
 public:
 
-    Pawn(std::string name , bool isWhite, Point initialPosition);
+    Pawn(const std::string& name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
     ~Pawn();

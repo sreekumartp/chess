@@ -2,7 +2,7 @@
 
 
 // call ChessPiece constructor to initialize the variables.
-Bishop::Bishop(std::string name , bool isWhite, Point initialPosition) 
+Bishop::Bishop(const std::string& name , bool isWhite, Point initialPosition) 
     : ChessPiece(name,isWhite,initialPosition){}
 
 Bishop::~Bishop()

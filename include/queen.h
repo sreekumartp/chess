@@ -14,7 +14,7 @@ class Queen:public ChessPiece
 
 public:
 
-    Queen(std::string name , bool isWhite, Point initialPosition);
+    Queen(const std::string& name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
     ~Queen();

@@ -12,7 +12,7 @@ class Bishop:public ChessPiece{
 
 public:
 
-    Bishop(std::string name , bool isWhite, Point initialPosition);
+    Bishop(const std::string& name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
     ~Bishop();

@@ -3,7 +3,7 @@
 
 //ChessPiece class implementation
 
-ChessPiece::ChessPiece(std::string name, bool isWhite, Point initialPosition) : name(name), isWhite(isWhite), position(initialPosition) 
+ChessPiece::ChessPiece(const std::string& name, bool isWhite, Point initialPosition) : name(name), isWhite(isWhite), position(initialPosition) 
 {}
 
 ChessPiece::~ChessPiece()

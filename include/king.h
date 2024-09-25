@@ -14,7 +14,7 @@ class King:public ChessPiece{
 
 public:
 
-    King(std::string name , bool isWhite, Point initialPosition);
+    King(const std::string& name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
     ~King();

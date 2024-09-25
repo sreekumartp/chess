@@ -13,7 +13,7 @@ protected:
  
 public:
     
-    ChessPiece(std::string name, bool isWhite, Point initialPosition);
+    ChessPiece(const std::string& name, bool isWhite, Point initialPosition);
  
     virtual ~ChessPiece();  // Add a virtual destructor
 
