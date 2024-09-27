@@ -16,7 +16,7 @@ public:
     Pawn(const std::string& name , bool isWhite, Point initialPosition);
     std::string getName() const;
 
-    ~Pawn();
+    virtual ~Pawn();
 
     Point getPosition() const;
     bool getIsWhite() const;

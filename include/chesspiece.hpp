@@ -5,6 +5,17 @@
 
 #include "common.hpp"
 
+
+enum ChessPieceType {
+    PAWN, 
+    ROOK, 
+    KNIGHT, 
+    BISHOP, 
+    QUEEN, 
+    KING 
+    // Add other piece types as needed
+};
+
 class ChessPiece {
 protected:
     std::string name;

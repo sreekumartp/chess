@@ -39,7 +39,7 @@ find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # Add the test executable
-add_executable(test_chessrules test/test_chessrules.cpp src/chessrules.cpp)
+add_executable(test_chessrules test/test_chessrules.cpp src/chessboard.cpp src/chessrules.cpp src/chesspiece.cpp src/pawn.cpp src/knight.cpp src/bishop.cpp src/rook.cpp src/queen.cpp src/king.cpp)
 add_executable(test_pawn test/test_pawn.cpp src/chesspiece.cpp src/pawn.cpp)
 add_executable(test_knight test/test_knight.cpp src/chesspiece.cpp src/knight.cpp)
 add_executable(test_bishop test/test_bishop.cpp src/chesspiece.cpp src/bishop.cpp)
@@ -47,6 +47,7 @@ add_executable(test_rook test/test_rook.cpp src/chesspiece.cpp src/rook.cpp)
 add_executable(test_queen test/test_queen.cpp src/chesspiece.cpp src/queen.cpp)
 add_executable(test_king test/test_king.cpp src/chesspiece.cpp src/king.cpp)
 add_executable(test_chessboard  test/test_chessboard.cpp src/chessboard.cpp src/chesspiece.cpp src/pawn.cpp src/knight.cpp src/bishop.cpp src/rook.cpp src/queen.cpp src/king.cpp)
+
 # Link the test executable with the main project and GoogleTest
 #target_link_libraries(test_chessrules gtest gtest_main)0
 

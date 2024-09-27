@@ -15,4 +15,12 @@ struct Point {
 
 };
 
+inline bool isWithinBoard(int x, int y) {
+  return 0 <= x && x <= 7 && 0 <= y && y <= 7;
+}
+
+inline bool isNotOnEdge(int x, int y) {
+  return 1 <= x && x <= 6 && 1 <= y && y <= 6;
+}
+
 #endif // COMMON_H

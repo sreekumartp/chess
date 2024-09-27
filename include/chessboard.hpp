@@ -20,6 +20,9 @@ class Board{
         void printBoard() const;
         void clearBoard();
         bool InitialiseBoard();
+        
+        
+
 };
 
 #endif // CHESSBOARD_H
