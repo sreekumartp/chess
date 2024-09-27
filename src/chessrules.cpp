@@ -11,7 +11,7 @@
 #include "king.hpp"
 #include <iostream>
 
-#define DEBUG 1
+#define DEBUG 0
 
 std::vector<std:: vector<Point>> ChessRules:: GenerateMoves(Point position, const Board & board)
 {
@@ -106,7 +106,7 @@ std::vector<Point> ChessRules::compute_coordinates_up(int x, int y, int max_n) {
     // Iterate over possible values of 'n'
     for (int n = 1; n <= max_n; ++n) {
         // Check if the point (x+n, y+n) is within the board
-        if(y+n <= 8) 
+        if(y+n <= 7) 
         {
             int new_x = x;
             int new_y = y + n;
@@ -124,7 +124,7 @@ std::vector<Point> ChessRules::compute_coordinates_down(int x, int y, int max_n)
     // Iterate over possible values of 'n'
     for (int n = 1; n <= max_n; ++n) {
         // Check if the point (x+n, y+n) is within the board
-        if(y-n > 0 ) 
+        if(y-n >= 0 ) 
         {
             int new_x = x;
             int new_y = y - n;
@@ -143,7 +143,7 @@ std::vector<Point> ChessRules::compute_coordinates_left(int x, int y, int max_n)
     // Iterate over possible values of 'n'
     for (int n = 1; n <= max_n; ++n) {
         // Check if the point (x+n, y+n) is within the board
-        if(x-n > 0 ) 
+        if(x-n >=0 ) 
         {
             int new_x = x-n;
             int new_y = y;
@@ -161,7 +161,7 @@ std::vector<Point> ChessRules::compute_coordinates_right(int x, int y, int max_n
     // Iterate over possible values of 'n'
     for (int n = 1; n <= max_n; ++n) {
         // Check if the point (x+n, y+n) is within the board
-        if(x+n <=8 ) 
+        if(x+n <=7 ) 
         {
             int new_x = x+n;
             int new_y = y;
@@ -180,7 +180,7 @@ std::vector<Point> ChessRules::compute_coordinates_left_up(int x, int y, int max
     // Iterate over possible values of 'n'
     for (int n = 1; n <= max_n; ++n) {
         // Check if the point (x+n, y+n) is within the board
-        if(x-n > 0 && y+n <= 8) 
+        if(x-n >= 0 && y+n <= 7) 
         {
             int new_x = x - n;
             int new_y = y + n;
@@ -199,7 +199,7 @@ std::vector<Point> ChessRules::compute_coordinates_left_down(int x, int y, int m
     // Iterate over possible values of 'n'
     for (int n = 1; n <= max_n; ++n) {
         // Check if the point (x+n, y+n) is within the board
-        if(x-n > 0 && y-n > 0 ) 
+        if(x-n >=0 && y-n >=0 ) 
         {
             int new_x = x - n;
             int new_y = y - n;
@@ -218,14 +218,19 @@ std::vector<Point> ChessRules::compute_coordinates_right_up(int x, int y, int ma
     // Iterate over possible values of 'n'
     for (int n = 1; n <= max_n; ++n) {
         // Check if the point (x+n, y+n) is within the board
-        if(x+n <= 8 && y+n <= 8) 
+        if(x+n <= 7 && y+n <= 7) 
         {
             int new_x = x + n;
             int new_y = y + n;
             coordinates.push_back({new_x, new_y});
         }
     }
-
+#if DEBUG    
+    for (const auto& point : coordinates) {
+        std::cout << "(" << point.x << ", " << point.y << ") ";
+    }
+    std::cout << std::endl;
+#endif
     return coordinates;
 }
 
@@ -237,7 +242,7 @@ std::vector<Point> ChessRules::compute_coordinates_right_down(int x, int y, int 
     // Iterate over possible values of 'n'
     for (int n = 1; n <= max_n; ++n) {
         //check if coordinates are withing the boundary and if so store the new coordinate
-        if(x+n <= 8 && y-n >0 ) 
+        if(x+n <= 7 && y-n >=0 ) 
         {
             int new_x = x + n;
             int new_y = y - n;
@@ -259,52 +264,66 @@ std::vector<std::vector<Point>> ChessRules::compute_knights_moves(int x, int y, 
     int new_y=0;
 
     new_x = x+1, new_y=y+2;
-    if(new_x<=8 && new_y<=8)
+    if(new_x<=7 && new_y<=7)
     {
         moves.push_back(Point(new_x,new_y));
+                std::cout << "Knight move: (" << new_x << ", " << new_y << ")" << std::endl;
     }
 
   
     new_x = x+2, new_y=y+1;
-    if(new_x<=8 && new_y<=8)
+    if(new_x<=7 && new_y<=7)
     {
         moves.push_back(Point(new_x,new_y));
+                std::cout << "Knight move: (" << new_x << ", " << new_y << ")" << std::endl;
     }
 
 
 
     new_x= x+2, new_y=y-1;
-    if(new_x<=8 && new_y>=1)
+    if(new_x<=7 && new_y>=0)
     {
         moves.push_back(Point(new_x,new_y));
+                std::cout << "Knight move: (" << new_x << ", " << new_y << ")" << std::endl;
     }    
     new_x=x+1, new_y=y-2;
-    if(new_x<=8 && new_y>=1)
+    if(new_x<=7 && new_y>=0)
     {
         moves.push_back(Point(new_x,new_y));
+                std::cout << "Knight move: (" << new_x << ", " << new_y << ")" << std::endl;
     }    
     new_x=x-2, new_y=y-1;
-    if(new_x>=1 && new_y>=1)
+    if(new_x>=0 && new_y>=0)
     {
         moves.push_back(Point(new_x,new_y));
+            std::cout << "Knight move: (" << new_x << ", " << new_y << ")" << std::endl;
     }    
     new_x=x-1, new_y=y-2;
-    if(new_x>=1 && new_y>=1)
+    if(new_x>=0 && new_y>=0)
     {
         moves.push_back(Point(new_x,new_y));
+         std::cout << "Knight move: (" << new_x << ", " << new_y << ")" << std::endl;
     }    
     new_x=x-2, new_y=y+1;
-    if(new_x>=1 && new_y<=8)
+    if(new_x>=0 && new_y<=7)
     {
         moves.push_back(Point(new_x,new_y));
+        std::cout << "Knight move: (" << new_x << ", " << new_y << ")" << std::endl;
     }    
     new_x=x-1, new_y=y+2;
-    if(new_x>=1 && new_y<=8)
+    if(new_x>=0 && new_y<=7)
     {
         moves.push_back(Point(new_x,new_y));
+        std::cout << "Knight move: (" << new_x << ", " << new_y << ")" << std::endl;
     }
 
     allmoves.push_back(moves);
+    for (const auto& moveSet : allmoves) {
+        for (const auto& move : moveSet) {
+            std::cout << "(" << move.x << ", " << move.y << ") ";
+        }
+        std::cout << std::endl;
+    }
     return allmoves;
 }
 
@@ -403,10 +422,10 @@ std::vector<std::vector<Point>> ChessRules::compute_knights_moves(int x, int y, 
         
         allmoves.reserve(4);
 
-        allmoves.push_back(compute_coordinates_right_up(x,y,8));
-        allmoves.push_back(compute_coordinates_right_down(x,y,8));
-        allmoves.push_back(compute_coordinates_left_down(x,y,8));
-        allmoves.push_back(compute_coordinates_left_up(x,y,8));
+        allmoves.push_back(compute_coordinates_right_up(x,y,7));
+        allmoves.push_back(compute_coordinates_right_down(x,y,7));
+        allmoves.push_back(compute_coordinates_left_down(x,y,7));
+        allmoves.push_back(compute_coordinates_left_up(x,y,7));
         
         
 
@@ -445,15 +464,26 @@ std::vector<std::vector<Point>> ChessRules::compute_knights_moves(int x, int y, 
          std::vector<std::vector<Point>> allmoves;
 
 
-        allmoves.push_back(compute_coordinates_up(x,y,8));
-        allmoves.push_back(compute_coordinates_right_up(x,y,8));
-        allmoves.push_back(compute_coordinates_right(x,y,8));
-        allmoves.push_back(compute_coordinates_right_down(x,y,8));
-        allmoves.push_back(compute_coordinates_down(x,y,8));
-        allmoves.push_back(compute_coordinates_left_down(x,y,8));
-        allmoves.push_back(compute_coordinates_left(x,y,8));
-        allmoves.push_back(compute_coordinates_left_up(x,y,8));
+        allmoves.push_back(compute_coordinates_up(x,y,7));
+        allmoves.push_back(compute_coordinates_right_up(x,y,7));
+        allmoves.push_back(compute_coordinates_right(x,y,7));
+        allmoves.push_back(compute_coordinates_right_down(x,y,7));
+        allmoves.push_back(compute_coordinates_down(x,y,7));
+        allmoves.push_back(compute_coordinates_left_down(x,y,7));
+        allmoves.push_back(compute_coordinates_left(x,y,7));
+        allmoves.push_back(compute_coordinates_left_up(x,y,7));
 
+        #if DEBUG
+            std::cout << "size of allmoves is " << allmoves.size() << std::endl;
+            int i =0;
+            for (const auto& moveSet : allmoves) {
+                std::cout << "index: " << i++ << " ";
+                for (const auto& move : moveSet) {
+                    std::cout << "(" << move.x << ", " << move.y << ") ";
+                }
+                std::cout << std::endl;
+            }
+        #endif
 
         return allmoves;;        
 
@@ -474,7 +504,19 @@ std::vector<std::vector<Point>> ChessRules::compute_knights_moves(int x, int y, 
         allmoves.push_back(compute_coordinates_down(x,y,1));
         allmoves.push_back(compute_coordinates_left_down(x,y,1));
         allmoves.push_back(compute_coordinates_left(x,y,1));
+        allmoves.push_back(compute_coordinates_left_up(x,y,1));
 
+    #if DEBUG
+        std::cout << "size of allmovesking is " << allmoves.size() << std::endl;
+        int i =0;
+        for (const auto& moveSet : allmoves) {
+            std::cout << "index: " << i++ << " ";
+        for (const auto& move : moveSet) {
+            std::cout << "(" << move.x << ", " << move.y << ") ";
+        }
+        std::cout << std::endl;
+        }
+    #endif
        
 
         return allmoves;
