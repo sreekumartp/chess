@@ -1,6 +1,11 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+
+#include <map>
+#include <string>
+#include <vector>
+
 // Your code here
 // Structure to represent a point
 struct Point {
@@ -23,6 +28,56 @@ struct Point {
 };
 
 
+class ChessboardMapper {
+public:
+    ChessboardMapper() {
+        initializeMaps();
+    }
+
+    Point getCoordinates(const std::string& chessPosition) const {
+        return chessToCoordinates.at(chessPosition);
+    }
+
+    std::string getChessPosition(const Point& point) const {
+        return coordinatesToChess.at(point);
+    }
+// New method to convert a 2D vector of Points to chess positions
+    std::vector<std::vector<std::string>> convertCoordinatesToChessPositions(
+        const std::vector<std::vector<Point>>& coordinates) const 
+    {
+        std::vector<std::vector<std::string>> chessPositions;
+        for (const auto& row : coordinates) {
+            std::vector<std::string> chessRow;
+            for (const auto& point : row) {
+                chessRow.push_back(getChessPosition(point));
+            }
+            chessPositions.push_back(chessRow);
+        }
+        return chessPositions;
+    }
+
+
+private:
+    void initializeMaps() {
+        if (chessToCoordinates.empty()) {
+
+            for (int col = 0; col < 8; ++col) {
+              for (int row = 0; row < 8; ++row) {
+                    std::string chessNotation = std::string(1, 'a' + col) + std::to_string(row+1);
+                    chessToCoordinates[chessNotation] = Point(col, row);
+                    coordinatesToChess[Point(col, row)] = chessNotation;
+                }
+            }
+        }
+    }
+
+    std::map<std::string, Point> chessToCoordinates;
+    std::map<Point, std::string> coordinatesToChess;
+};
+
+
+
+
 inline bool isWithinBoard(int x, int y) {
   return 0 <= x && x <= 7 && 0 <= y && y <= 7;
 }
@@ -30,9 +85,6 @@ inline bool isWithinBoard(int x, int y) {
 inline bool isNotOnEdge(int x, int y) {
   return 1 <= x && x <= 6 && 1 <= y && y <= 6;
 }
-
-#include <map>
-#include <string>
 
 inline std::map<std::string, Point> initializeStartingPositions() {
   std::map<std::string, Point> startingPositions;
