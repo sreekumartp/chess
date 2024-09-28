@@ -20,7 +20,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 # Set the cppcheck path
-set(CMAKE_CXX_CPPCHECK "cppcheck;--enable=warning,performance,portability,information;--language=c++")
+set(CMAKE_CXX_CPPCHECK "cppcheck;--enable=all;--language=c++;--suppress=missingIncludeSystem;--suppress=unusedFunction")
 
 # Include directories if necessary
 include_directories(include)
