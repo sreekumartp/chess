@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.10)
 # Set the project name
 project(chessrules)
 
+include(CTest)
+
 # Specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -18,6 +20,8 @@ FetchContent_Declare(
 
 # Add GTest to the build
 FetchContent_MakeAvailable(googletest)
+
+message(STATUS "CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
 
 # Set the cppcheck path
 set(CMAKE_CXX_CPPCHECK "cppcheck;--enable=all;--language=c++;--suppress=missingIncludeSystem;--suppress=unusedFunction")
