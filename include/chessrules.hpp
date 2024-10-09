@@ -11,7 +11,9 @@ class ChessRules{
 
 public:
 
-    std::vector<std:: vector<Point>> GenerateMoves(Point start, const Board & board);
+    std::vector<std:: vector<Point>> GenerateMoves(Point position, const Board & board);
+    std::vector<Point> GenerateValidMoves(Point position, const Board & board);
+
     bool IsValidMove(Point start, Point end, const Board & board);
 
 private:    
@@ -33,8 +35,12 @@ private:
     std::vector<Point> compute_coordinates_right_down(int x, int y, int max_n);
     // Function to compute the possible moves of a knight
    std::vector<std::vector<Point>> compute_knights_moves(int x, int y, int max_n,bool isWhite);
+    
     // Function to compute the possible moves of a pawn
     std::vector<std::vector<Point>>  compute_pawn_moves(int x, int y, int max_n,bool isWhite);
+    // Function to compute the valid moves of a pawn
+    std::vector<Point> compute_pawn_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board);    
+    
     // Function to compute the possible moves of a bishop
     std::vector<std::vector<Point>> compute_bishop_moves(int x, int y, int max_n,bool isWhite);
     // Function to compute the possible moves of a rook

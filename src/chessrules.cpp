@@ -1,3 +1,146 @@
+/**
+ * @file chessrules.cpp
+ * @brief Implementation of chess rules and move generation for different chess pieces.
+ * 
+ * This file contains the implementation of the ChessRules class, which provides methods
+ * to generate possible moves for different chess pieces based on their positions on the board.
+ * It also includes helper functions to compute coordinates for various directions.
+ * 
+ * @include <vector>
+ * @include "chessrules.hpp"
+ * @include "chessboard.hpp"
+ * @include "common.hpp"
+ * @include "chesspiece.hpp"
+ * @include "pawn.hpp"
+ * @include "rook.hpp"
+ * @include "knight.hpp"
+ * @include "bishop.hpp"
+ * @include "queen.hpp"
+ * @include "king.hpp"
+ * @include <iostream>
+ * 
+ * @define DEBUG 0
+ * 
+ * @class ChessRules
+ * @brief Class to handle chess rules and move generation.
+ * 
+ * @fn std::vector<std::vector<Point>> ChessRules::GenerateMoves(Point position, const Board & board)
+ * @brief Generates all possible moves for a piece at a given position on the board.
+ * @param position The position of the piece on the board.
+ * @param board The current state of the chess board.
+ * @return A vector of vectors containing possible moves for the piece.
+ * 
+ * @fn bool ChessRules::IsValidMove(Point start, Point end, const Board & board)
+ * @brief Checks if a move from start to end position is valid.
+ * @param start The starting position of the move.
+ * @param end The ending position of the move.
+ * @param board The current state of the chess board.
+ * @return True if the move is valid, false otherwise.
+ * 
+ * @fn std::vector<Point> ChessRules::compute_coordinates_up(int x, int y, int max_n)
+ * @brief Computes coordinates vertically up from a given point.
+ * @param x The x-coordinate of the starting point.
+ * @param y The y-coordinate of the starting point.
+ * @param max_n The maximum number of steps to move.
+ * @return A vector of points representing the coordinates.
+ * 
+ * @fn std::vector<Point> ChessRules::compute_coordinates_down(int x, int y, int max_n)
+ * @brief Computes coordinates vertically down from a given point.
+ * @param x The x-coordinate of the starting point.
+ * @param y The y-coordinate of the starting point.
+ * @param max_n The maximum number of steps to move.
+ * @return A vector of points representing the coordinates.
+ * 
+ * @fn std::vector<Point> ChessRules::compute_coordinates_left(int x, int y, int max_n)
+ * @brief Computes coordinates horizontally left from a given point.
+ * @param x The x-coordinate of the starting point.
+ * @param y The y-coordinate of the starting point.
+ * @param max_n The maximum number of steps to move.
+ * @return A vector of points representing the coordinates.
+ * 
+ * @fn std::vector<Point> ChessRules::compute_coordinates_right(int x, int y, int max_n)
+ * @brief Computes coordinates horizontally right from a given point.
+ * @param x The x-coordinate of the starting point.
+ * @param y The y-coordinate of the starting point.
+ * @param max_n The maximum number of steps to move.
+ * @return A vector of points representing the coordinates.
+ * 
+ * @fn std::vector<Point> ChessRules::compute_coordinates_left_up(int x, int y, int max_n)
+ * @brief Computes coordinates diagonally left up from a given point.
+ * @param x The x-coordinate of the starting point.
+ * @param y The y-coordinate of the starting point.
+ * @param max_n The maximum number of steps to move.
+ * @return A vector of points representing the coordinates.
+ * 
+ * @fn std::vector<Point> ChessRules::compute_coordinates_left_down(int x, int y, int max_n)
+ * @brief Computes coordinates diagonally left down from a given point.
+ * @param x The x-coordinate of the starting point.
+ * @param y The y-coordinate of the starting point.
+ * @param max_n The maximum number of steps to move.
+ * @return A vector of points representing the coordinates.
+ * 
+ * @fn std::vector<Point> ChessRules::compute_coordinates_right_up(int x, int y, int max_n)
+ * @brief Computes coordinates diagonally right up from a given point.
+ * @param x The x-coordinate of the starting point.
+ * @param y The y-coordinate of the starting point.
+ * @param max_n The maximum number of steps to move.
+ * @return A vector of points representing the coordinates.
+ * 
+ * @fn std::vector<Point> ChessRules::compute_coordinates_right_down(int x, int y, int max_n)
+ * @brief Computes coordinates diagonally right down from a given point.
+ * @param x The x-coordinate of the starting point.
+ * @param y The y-coordinate of the starting point.
+ * @param max_n The maximum number of steps to move.
+ * @return A vector of points representing the coordinates.
+ * 
+ * @fn std::vector<std::vector<Point>> ChessRules::compute_knights_moves(int x, int y, int max_n, bool isWhite)
+ * @brief Computes possible moves for a knight from a given position.
+ * @param x The x-coordinate of the starting position.
+ * @param y The y-coordinate of the starting position.
+ * @param max_n The maximum number of steps to move.
+ * @param isWhite Boolean indicating if the knight is white.
+ * @return A vector of vectors containing possible moves for the knight.
+ * 
+ * @fn std::vector<std::vector<Point>> ChessRules::compute_pawn_moves(int x, int y, int max_n, bool isWhite)
+ * @brief Computes possible moves for a pawn from a given position.
+ * @param x The x-coordinate of the starting position.
+ * @param y The y-coordinate of the starting position.
+ * @param max_n The maximum number of steps to move.
+ * @param isWhite Boolean indicating if the pawn is white.
+ * @return A vector of vectors containing possible moves for the pawn.
+ * 
+ * @fn std::vector<std::vector<Point>> ChessRules::compute_bishop_moves(int x, int y, int max_n, bool isWhite)
+ * @brief Computes possible moves for a bishop from a given position.
+ * @param x The x-coordinate of the starting position.
+ * @param y The y-coordinate of the starting position.
+ * @param max_n The maximum number of steps to move.
+ * @param isWhite Boolean indicating if the bishop is white.
+ * @return A vector of vectors containing possible moves for the bishop.
+ * 
+ * @fn std::vector<std::vector<Point>> ChessRules::compute_rook_moves(int x, int y, int max_n, bool isWhite)
+ * @brief Computes possible moves for a rook from a given position.
+ * @param x The x-coordinate of the starting position.
+ * @param y The y-coordinate of the starting position.
+ * @param max_n The maximum number of steps to move.
+ * @param isWhite Boolean indicating if the rook is white.
+ * @return A vector of vectors containing possible moves for the rook.
+ * 
+ * @fn std::vector<std::vector<Point>> ChessRules::compute_queen_moves(int x, int y, int max_n, bool isWhite)
+ * @brief Computes possible moves for a queen from a given position.
+ * @param x The x-coordinate of the starting position.
+ * @param y The y-coordinate of the starting position.
+ * @param max_n The maximum number of steps to move.
+ * @param isWhite Boolean indicating if the queen is white.
+ * @return A vector of vectors containing possible moves for the queen.
+ * 
+ * @fn std::vector<std::vector<Point>> ChessRules::compute_king_moves(int x, int y, int max_n, bool isWhite)
+ * @brief Computes possible moves for a king from a given position.
+ * @param x The x-coordinate of the starting position.
+ * @param y The y-coordinate of the starting position.
+ * @param max_n The maximum number of steps to move.
+ * @param isWhite Boolean indicating if the king is white.
+ * @return A vector of vectors containing possible moves for the king.
+ */
 #include <vector>
 #include "chessrules.hpp"
 #include "chessboard.hpp"
@@ -12,6 +155,147 @@
 #include <iostream>
 
 #define DEBUG 0
+
+std::vector<Point> ChessRules::GenerateValidMoves(Point position, const Board & board)
+{
+
+std:: vector<Point> validMoves;
+
+validMoves.reserve(8);
+ChessPiece* piecePtr= board.getPiece(position);
+if (piecePtr == nullptr) {
+    std::cerr << "Error: No piece found at position (" << position.x << ", " << position.y << ")" << std::endl;
+    return {};
+}
+
+    // compute the valid moves for a pawn
+    if(dynamic_cast<Pawn *>(piecePtr))
+    {
+        // compute the valid move for a white pawn
+
+        if(piecePtr->getIsWhite())
+        {
+            std::cout << "Generating valid moves for Pawn at position (" << position.x << ", " << position.y << ")" <<' ' <<piecePtr->getName() <<std::endl;
+            // ... generate Pawn-specific moves
+            validMoves = compute_pawn_valid_moves(position.x, position.y, 2,true, board);
+        }
+        else
+        {
+        // compute the valid move for a black pawn
+        
+        
+        }
+
+        
+    }
+
+return validMoves;
+}
+
+// Function to compute the possible moves of a pawn
+std::vector<Point> ChessRules::compute_pawn_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board)
+{
+  
+    std::vector<Point> validMoves;
+    int maxn = 2;
+     
+    validMoves.reserve(4);
+    // compute valid moves in forward (up) direction
+    // if piece on starting position , then it can jump two positions
+    if(y==1)
+    {
+        maxn = 2;
+
+        // check if in each position in front of the pawn is empty
+        for (int n = 1; n <= maxn; ++n) {
+            // retrieve the piece at the position (x, y+n) and check if empty
+            if(board.getPiece({x, y+n}) == nullptr)
+            {
+                int new_x = x;
+                int new_y = y + n;
+                validMoves.push_back({new_x, new_y});
+            }
+            else
+            {
+                // no more moves possible
+                // break out of the loop
+
+                break;
+            }
+
+        }
+
+    }
+    else{
+        // if piece is not on starting position , then it can jump one position
+
+        maxn = 1;
+        // check if in each position in front of the pawn is empty
+        for (int n = 1; n <= maxn; ++n) {
+            
+            if(y+n <=7)
+            {
+                    // retrieve the piece at the position (x, y+n) and check if empty
+                    if(board.getPiece({x, y+n}) == nullptr)
+                    {
+                        int new_x = x;
+                        int new_y = y + n;
+                        validMoves.push_back({new_x, new_y});
+                    }
+                    else
+                    {
+                        // no more moves possible
+                        // break out of the loop
+
+                        break;
+                    }
+            }
+
+        }
+
+    }
+
+    // compute valid moves in forward (up, right diagonal) direction
+
+        if(x+1 <= 7 && y+1 <= 7)
+        {
+            // retrieve the piece at the position (x+n, y+n) and check if it is an opponent piece
+            ChessPiece* piecePtr = board.getPiece({x+1, y+1});
+            if (piecePtr != nullptr && piecePtr->getIsWhite() != isWhite) {
+                int new_x = x + 1;
+                int new_y = y + 1;
+                validMoves.push_back({new_x, new_y});
+            }
+            else{
+                std::cout << "friend found at position (" << x << ", " << y << ")" << std::endl;
+
+            }
+        }
+    
+
+
+    // compute valid moves forward (up, left diagonal direction )
+
+    if(x-1 >=0 && y+1 <= 7)
+    {
+        // retrieve the piece at the position (x-n, y+n) and check if it is an opponent piece
+        ChessPiece* piecePtr = board.getPiece({x-1, y+1});
+        if (piecePtr != nullptr && piecePtr->getIsWhite() != isWhite) {
+            int new_x = x - 1;
+            int new_y = y + 1;
+            validMoves.push_back({new_x, new_y});
+        }
+        else{
+            std::cout << "friend found at position (" << x << ", " << y << ")" << std::endl;
+
+        }
+    }   
+
+    return validMoves;
+}
+
+
+
 
 std::vector<std:: vector<Point>> ChessRules:: GenerateMoves(Point position, const Board & board)
 {
