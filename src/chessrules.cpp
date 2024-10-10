@@ -182,15 +182,19 @@ if (piecePtr == nullptr) {
         else
         {
         // compute the valid move for a black pawn
-        
+            validMoves = compute_pawn_valid_moves(position.x, position.y, 2,false, board);
+      
         
         }
 
         
     }
 
+
 return validMoves;
 }
+
+#define DEBUG_LOCAL 0
 
 // Function to compute the possible moves of a pawn
 std::vector<Point> ChessRules::compute_pawn_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board)
@@ -200,69 +204,91 @@ std::vector<Point> ChessRules::compute_pawn_valid_moves(int x, int y, int max_n,
     int maxn = 2;
      
     validMoves.reserve(4);
-    // compute valid moves in forward (up) direction
-    // if piece on starting position , then it can jump two positions
-    if(y==1)
+
+    if(isWhite)
     {
-        maxn = 2;
-
-        // check if in each position in front of the pawn is empty
-        for (int n = 1; n <= maxn; ++n) {
-            // retrieve the piece at the position (x, y+n) and check if empty
-            if(board.getPiece({x, y+n}) == nullptr)
-            {
-                int new_x = x;
-                int new_y = y + n;
-                validMoves.push_back({new_x, new_y});
-            }
-            else
-            {
-                // no more moves possible
-                // break out of the loop
-
-                break;
-            }
-
-        }
-
-    }
-    else{
-        // if piece is not on starting position , then it can jump one position
-
-        maxn = 1;
-        // check if in each position in front of the pawn is empty
-        for (int n = 1; n <= maxn; ++n) {
-            
-            if(y+n <=7)
-            {
-                    // retrieve the piece at the position (x, y+n) and check if empty
-                    if(board.getPiece({x, y+n}) == nullptr)
-                    {
-                        int new_x = x;
-                        int new_y = y + n;
-                        validMoves.push_back({new_x, new_y});
-                    }
-                    else
-                    {
-                        // no more moves possible
-                        // break out of the loop
-
-                        break;
-                    }
-            }
-
-        }
-
-    }
-
-    // compute valid moves in forward (up, right diagonal) direction
-
-        if(x+1 <= 7 && y+1 <= 7)
+        // compute valid moves in forward (up) direction
+        // if piece on starting position , then it can jump two positions
+        if(y==1)
         {
-            // retrieve the piece at the position (x+n, y+n) and check if it is an opponent piece
-            ChessPiece* piecePtr = board.getPiece({x+1, y+1});
+            maxn = 2;
+
+            // check if in each position in front of the pawn is empty
+            for (int n = 1; n <= maxn; ++n) {
+                // retrieve the piece at the position (x, y+n) and check if empty
+                if(board.getPiece({x, y+n}) == nullptr)
+                {
+                    int new_x = x;
+                    int new_y = y + n;
+                    validMoves.push_back({new_x, new_y});
+                }
+                else
+                {
+                    // no more moves possible
+                    // break out of the loop
+
+                    break;
+                }
+
+            }
+
+        }
+        else{
+            // if piece is not on starting position , then it can jump one position
+
+            maxn = 1;
+            // check if in each position in front of the pawn is empty
+            for (int n = 1; n <= maxn; ++n) {
+                
+                if(y+n <=7)
+                {
+                        // retrieve the piece at the position (x, y+n) and check if empty
+                        if(board.getPiece({x, y+n}) == nullptr)
+                        {
+                            int new_x = x;
+                            int new_y = y + n;
+                            validMoves.push_back({new_x, new_y});
+                        }
+                        else
+                        {
+                            // no more moves possible
+                            // break out of the loop
+
+                            break;
+                        }
+                }
+
+            }
+
+        }
+
+        // compute valid moves in forward (up, right diagonal) direction
+
+            if(x+1 <= 7 && y+1 <= 7)
+            {
+                // retrieve the piece at the position (x+n, y+n) and check if it is an opponent piece
+                ChessPiece* piecePtr = board.getPiece({x+1, y+1});
+                if (piecePtr != nullptr && piecePtr->getIsWhite() != isWhite) {
+                    int new_x = x + 1;
+                    int new_y = y + 1;
+                    validMoves.push_back({new_x, new_y});
+                }
+                else{
+                    std::cout << "friend found at position (" << x << ", " << y << ")" << std::endl;
+
+                }
+            }
+        
+
+
+        // compute valid moves forward (up, left diagonal direction )
+
+        if(x-1 >=0 && y+1 <= 7)
+        {
+            // retrieve the piece at the position (x-n, y+n) and check if it is an opponent piece
+            ChessPiece* piecePtr = board.getPiece({x-1, y+1});
             if (piecePtr != nullptr && piecePtr->getIsWhite() != isWhite) {
-                int new_x = x + 1;
+                int new_x = x - 1;
                 int new_y = y + 1;
                 validMoves.push_back({new_x, new_y});
             }
@@ -270,32 +296,98 @@ std::vector<Point> ChessRules::compute_pawn_valid_moves(int x, int y, int max_n,
                 std::cout << "friend found at position (" << x << ", " << y << ")" << std::endl;
 
             }
+        }   
+    }
+    else{
+        if(y==6)         // if black pawn on row 6, it can move two positions forward , if there is no other piece hindering its movement
+        {
+            maxn = 2;
+
+            // check if in each position in front of the pawn is empty
+            for (int n = 1; n <= maxn; ++n) {
+                if(board.getPiece({x, y-n}) == nullptr)
+                {
+                    int new_x = x;
+                    int new_y = y - n;
+                    validMoves.push_back({new_x, new_y});
+                    #if DEBUG_LOCAL
+                                        std::cout << "Valid move for black pawn: (" << new_x << ", " << new_y << ")" << std::endl;
+                    #endif
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
-    
-
-
-    // compute valid moves forward (up, left diagonal direction )
-
-    if(x-1 >=0 && y+1 <= 7)
-    {
-        // retrieve the piece at the position (x-n, y+n) and check if it is an opponent piece
-        ChessPiece* piecePtr = board.getPiece({x-1, y+1});
-        if (piecePtr != nullptr && piecePtr->getIsWhite() != isWhite) {
-            int new_x = x - 1;
-            int new_y = y + 1;
-            validMoves.push_back({new_x, new_y});
+        else
+        {
+            maxn = 1;
+            for (int n = 1; n <= maxn; ++n) {
+                if(y-n >= 0)
+                {
+                    if(board.getPiece({x, y-n}) == nullptr)
+                    {
+                        int new_x = x;
+                        int new_y = y - n;
+                        validMoves.push_back({new_x, new_y});
+                        #if DEBUG_LOCAL
+                                            std::cout << "Valid move for black pawn: (" << new_x << ", " << new_y << ")" << std::endl;
+                        #endif
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
         }
-        else{
-            std::cout << "friend found at position (" << x << ", " << y << ")" << std::endl;
 
+        // compute valid moves in forward (down, left diagonal) direction
+        if(x-1 >= 0 && y-1 >= 0)
+        {
+            ChessPiece* piecePtr = board.getPiece({x-1, y-1});
+            #if DEBUG_LOCAL
+            if (piecePtr != nullptr)
+            {
+                std::cout << "Piece color: " << (piecePtr->getIsWhite() ? "White" : "Black") << ", Piece type: " << piecePtr->getName() << std::endl;
+            }
+            #endif
+            if (piecePtr != nullptr && piecePtr->getIsWhite() == true) {
+                int new_x = x - 1;
+                int new_y = y - 1;
+                validMoves.push_back({new_x, new_y});
+                #if DEBUG_LOCAL
+                                std::cout << "Opponent found at position (" << x - 1 << ", " << y - 1 << ")" << std::endl;
+
+                #endif
+            }
         }
-    }   
 
+        // compute valid moves in forward (down, right diagonal) direction
+        if(x+1 <= 7 && y-1 >= 0)
+        {
+            ChessPiece* piecePtr = board.getPiece({x+1, y-1});
+            if (piecePtr != nullptr)
+            {
+                std::cout << "Piece color: " << (piecePtr->getIsWhite() ? "White" : "Black") << ", Piece type: " << piecePtr->getName() << std::endl;
+            }
+            
+            
+            if (piecePtr != nullptr && piecePtr->getIsWhite() == true) {
+                int new_x = x + 1;
+                int new_y = y - 1;
+                validMoves.push_back({new_x, new_y});
+                #if DEBUG_LOCAL
+                                std::cout << "Opponent found at position (" << x + 1 << ", " << y - 1 << ")" << std::endl;
+                #endif
+            }
+        }
+    }
     return validMoves;
 }
 
-
-
+#undef DEBUG
 
 std::vector<std:: vector<Point>> ChessRules:: GenerateMoves(Point position, const Board & board)
 {
