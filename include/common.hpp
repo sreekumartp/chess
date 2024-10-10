@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 // Your code here
 // Structure to represent a point
@@ -47,15 +48,12 @@ public:
     {
         std::vector<std::vector<std::string>> chessPositions;
         for (const auto& row : coordinates) {
-            std::vector<std::string> chessRow;
-            for (const auto& point : row) {
-                chessRow.push_back(getChessPosition(point));
-            }
+            std::vector<std::string> chessRow(row.size());
+            std::transform(row.begin(), row.end(), chessRow.begin(), [this](const Point& point) { return this->getChessPosition(point); });
             chessPositions.push_back(chessRow);
         }
         return chessPositions;
     }
-
 
 private:
     void initializeMaps() {
