@@ -605,10 +605,7 @@ TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnBlocked) {
     // Expected valid moves for a black pawn at a7 when blocked by a pawn at a6
     std::vector<Point> expected = {};
 
-    ASSERT_EQ(moves.size(), expected.size());
-    for (size_t i = 0; i < moves.size(); ++i) {
-        EXPECT_EQ(moves[i], expected[i]);
-    }
+    EXPECT_TRUE(moves.empty());
 }
 
 TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnCapture) {
