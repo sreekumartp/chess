@@ -43,6 +43,9 @@ private:
     
     // Function to compute the possible moves of a bishop
     std::vector<std::vector<Point>> compute_bishop_moves(int x, int y, int max_n,bool isWhite);
+    // Function to generate valid moves for bishop
+    std::vector<Point> compute_bishop_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board);
+
     // Function to compute the possible moves of a rook
     std::vector<std::vector<Point>> compute_rook_moves(int x, int y, int max_n,bool isWhite);
     // Function to compute the possible moves of a queen

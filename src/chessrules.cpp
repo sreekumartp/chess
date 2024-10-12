@@ -171,23 +171,18 @@ if (piecePtr == nullptr) {
     // compute the valid moves for a pawn
     if(dynamic_cast<Pawn *>(piecePtr))
     {
-        // compute the valid move for a white pawn
-
-        if(piecePtr->getIsWhite())
-        {
+        // compute the valid move for a  pawn
             std::cout << "Generating valid moves for Pawn at position (" << position.x << ", " << position.y << ")" <<' ' <<piecePtr->getName() <<std::endl;
             // ... generate Pawn-specific moves
-            validMoves = compute_pawn_valid_moves(position.x, position.y, 2,true, board);
-        }
-        else
-        {
-        // compute the valid move for a black pawn
-            validMoves = compute_pawn_valid_moves(position.x, position.y, 2,false, board);
-      
+            validMoves = compute_pawn_valid_moves(position.x, position.y, 2,piecePtr->getIsWhite(), board);
+ 
         
-        }
+    }
+    else if(dynamic_cast<Bishop *>(piecePtr))
+    {
+        std::cout << "Generating valid moves for Bishop at position (" << position.x << ", " << position.y << ")" << ' ' << piecePtr->getName() << std::endl;
+        validMoves = compute_bishop_valid_moves(position.x, position.y, 8,piecePtr->getIsWhite(), board);
 
-        
     }
 
 
@@ -387,7 +382,144 @@ std::vector<Point> ChessRules::compute_pawn_valid_moves(int x, int y, int max_n,
     return validMoves;
 }
 
-#undef DEBUG
+#undef DEBUG_LOCAL
+
+
+  std::vector<Point> ChessRules::compute_bishop_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board)
+  {
+    std::vector<Point> validMoves;
+    
+    validMoves.reserve(8);
+
+    ChessPiece* piecePtr1 = board.getPiece({x, y});
+    board.isWhiteSquare({x, y});
+    if (piecePtr1 == nullptr) {
+        std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
+        return {};
+    }
+    // Debug code to print the attributes of the piecePtr
+    std::cout << "Piece at position (" << x << ", " << y << "):" << std::endl;
+    std::cout << "Name: " << piecePtr1->getName() << std::endl;
+    std::cout << "Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
+    std::cout << "Square color: " << (board.isWhiteSquare({x, y}) ? "White" : "Black") << std::endl;
+
+    if(piecePtr1->getName() != "BB" && piecePtr1->getName() != "WB")
+    {
+        std::cerr << "Error: Piece at position (" << x << ", " << y << ") is not a Bishop" << std::endl;
+        return {};
+    }
+    // if(piecePtr1->getIsWhite() != board.isWhiteSquare({x, y}))
+    // {
+    //     std::cerr << "Error: Piece at position (" << x << ", " << y << ") is not of the expected color" << std::endl;
+    //     return {};
+    // }
+
+        int dir[] = {1,-1};
+
+        for (int d : dir) 
+        {
+            std::cout << "Direction: " << d << std::endl;
+
+            for (int n = 1; n <= max_n; ++n) 
+            {
+                int new_x = x + n * d;
+                int new_y = y + n * d;
+                // Check if the point is within the board
+                if (new_x <= 7 && new_x >= 0 && new_y <= 7 && new_y >= 0) 
+                {
+                    std::cout << "New coordinates: (" << new_x << ", " << new_y << ")" << std::endl;
+                    // check if there a piece in the new position
+                    ChessPiece *piecePtr = board.getPiece({new_x,new_y});
+
+                    if(piecePtr == nullptr)
+                    {
+
+                        std::cout << "Added, Empty position found : (" << new_x << ", " << new_y << ")" << std::endl;
+
+                        // add to validMoves if the new position is empty
+                        validMoves.push_back({new_x, new_y});
+                    }
+                    else
+                    {
+                        // add to valid Moves if new position has a and the piece is an enemy.
+                        if(piecePtr1->getIsWhite() != piecePtr->getIsWhite()) 
+                        {
+                            std::cout << "Added, Opponent found at position (" << new_x << ", " << new_y << ")" << std::endl;
+                            // add to validMoves if the new position is empty
+                            validMoves.push_back({new_x, new_y});
+
+                        }
+                        else{
+                            
+                            std::cout << "Friend found at position (" << new_x << ", " << new_y << ")" << std::endl;
+                            std::cout << "Piece color: " << (piecePtr->getIsWhite() ? "White" : "Black") << ", Piece type: " << piecePtr->getName() << std::endl;
+
+                        }
+                        // and stop anymore additions since there is a piece in the position (enemy or friend)
+                        break;
+
+                    }
+
+                }
+                
+            }
+
+            for (int n = 1; n <= max_n; ++n) 
+            {
+                int new_x = x + n * d;
+                int new_y = y - n * d;
+                // Check if the point is within the board
+                // Check if the point is within the board
+                if (new_x <= 7 && new_x >= 0 && new_y <= 7 && new_y >= 0) 
+                {
+                    std::cout << "New coordinates: (" << new_x << ", " << new_y << ")" << std::endl;
+                    // check if there a piece in the new position
+                    ChessPiece *piecePtr = board.getPiece({new_x,new_y});
+
+                    if(piecePtr == nullptr)
+                    {
+                        std::cout << "Added, Empty position found : (" << new_x << ", " << new_y << ")" << std::endl;
+                        // add to validMoves if the new position is empty
+                        validMoves.push_back({new_x, new_y});
+                    }
+                    else
+                    {
+                        // add to valid Moves if new position has a and the piece is an enemy.
+                        if(piecePtr1->getIsWhite() != piecePtr->getIsWhite()) 
+                        {
+                            // add to validMoves if the new position is empty
+                            std::cout << "Added, Opponent found at position (" << new_x << ", " << new_y << ")" << std::endl;
+                            validMoves.push_back({new_x, new_y});
+
+                        }
+                        else{
+                            
+                            std::cout << "Friend found at position (" << new_x << ", " << new_y << ")" << std::endl;
+                            std::cout << "Piece color: " << (piecePtr->getIsWhite() ? "White" : "Black") << ", Piece type: " << piecePtr->getName() << std::endl;
+
+                        }
+                        // and stop anymore additions since there is a piece in the position (enemy or friend)
+                        break;
+
+                    }
+
+                }
+            }
+
+          
+
+        }
+
+        std::cout << "Valid moves for Bishop: ";
+        for (const auto& move : validMoves) {
+            std::cout << "(" << move.x << ", " << move.y << ") ";
+        }
+        std::cout << std::endl;
+
+    return validMoves;
+
+  }
+
 
 std::vector<std:: vector<Point>> ChessRules:: GenerateMoves(Point position, const Board & board)
 {

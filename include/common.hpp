@@ -55,6 +55,17 @@ public:
         return chessPositions;
     }
 
+      std::vector<std::string> convertCoordinatesToChessPositions(
+        const std::vector<Point>& coordinates) const 
+    {
+        std::vector<std::string> chessPositions;
+  
+        std::transform(coordinates.begin(), coordinates.end(),chessPositions.begin(),[this](const Point &point){return this->getChessPosition(point);});
+
+        return chessPositions;
+    }
+  
+
 private:
     void initializeMaps() {
         if (chessToCoordinates.empty()) {
@@ -113,4 +124,20 @@ inline std::map<std::string, Point> initializeStartingPositions() {
   return startingPositions;
 }
 
+ class ExpectedMoves {
+    public:
+        std::vector<std::string> expected_algebraic ;
+
+      explicit ExpectedMoves(const std::vector<std::string>& ea):expected_algebraic(ea){};
+
+        std::vector<Point> getExpectedPoints(ChessboardMapper& mapper) {
+            std::vector<Point> expected;
+            std::transform(expected_algebraic.begin(), expected_algebraic.end(), std::back_inserter(expected), [&mapper](const std::string& pos) {
+                return mapper.getCoordinates(pos);
+            });
+            return expected;
+        }
+    };
+
+    
 #endif // COMMON_H
