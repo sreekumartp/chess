@@ -88,7 +88,7 @@ void Board::printBoard() const {
                 pt = cp->getPosition();
                 std::cout << cp->getName() <<'[' << col << ',' << row <<']' <<' ';
             } else {
-                std::cout << "__" << ' ';
+                std::cout << "_______" << ' ';
             }
         }
         std::cout << std::endl;

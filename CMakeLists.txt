@@ -56,7 +56,7 @@ add_executable(test_chessboard  test/test_chessboard.cpp src/chessboard.cpp src/
 #target_link_libraries(test_chessrules gtest gtest_main)0
 
 # Link the test executable with the main project and GoogleTest
-target_link_libraries(test_chessrules ${GTEST_LIBRARIES} pthread)
+target_link_libraries(test_chessrules ${GTEST_LIBRARIES} gmock_main pthread)
 target_link_libraries(test_pawn ${GTEST_LIBRARIES} pthread)
 target_link_libraries(test_knight ${GTEST_LIBRARIES} pthread)
 target_link_libraries(test_bishop ${GTEST_LIBRARIES} pthread)

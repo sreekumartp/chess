@@ -1,4 +1,6 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
 #include "chessrules.hpp"
 #include "chessboard.hpp"
 #include "common.hpp"
@@ -7,7 +9,6 @@
 // #include "pawn.hpp"
 // #include "rook.hpp"
 // #include "knight.hpp"
-#include "bishop.hpp"
 // #include "queen.hpp"
 // #include "king.hpp"
 
@@ -544,12 +545,9 @@ TEST_F(ChessRulesTest, GenerateValidMovesForPawnBlocked) {
     auto moves = rules.GenerateValidMoves(coordinates, board);
 
     // Expected valid moves for a pawn at a2 when blocked by a pawn at a3
-    std::vector<Point> expected = {};
+    EXPECT_TRUE(moves.empty());
 
-    ASSERT_EQ(moves.size(), expected.size());
-    for (size_t i = 0; i < moves.size(); ++i) {
-        EXPECT_EQ(moves[i], expected[i]);
-    }
+
 }
 
 TEST_F(ChessRulesTest, GenerateValidMovesForPawnCapture) {
@@ -603,9 +601,7 @@ TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnBlocked) {
     auto moves = rules.GenerateValidMoves(coordinates, board);
 
     // Expected valid moves for a black pawn at a7 when blocked by a pawn at a6
-    std::vector<Point> expected = {};
-
-    EXPECT_TRUE(moves.empty());
+     EXPECT_TRUE(moves.empty());
 }
 
 TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnCapture) {
@@ -626,9 +622,121 @@ TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnCapture) {
     ASSERT_EQ(moves.size(), expected.size());
     for (size_t i = 0; i < moves.size(); ++i) {
         EXPECT_EQ(moves[i], expected[i]);
+        
     }
 }
 
+TEST_F(ChessRulesTest, GenerateValidMovesForWhiteBishopStartingPosition) {
+    std::string pos = "c1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    // Expected valid moves for a white bishop at starting position c1
+    std::vector<Point> expected = {};
+    EXPECT_TRUE(moves.empty());
+
+}
+
+
+
+TEST_F(ChessRulesTest, GenerateValidMovesForBishop) {
+    std::string pos = "g7";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+   // move black pawn at from g7 to g6
+    board.movePiece(mapper.getCoordinates("g7"), mapper.getCoordinates("g6"));
+
+    board.movePiece(mapper.getCoordinates("f8"), mapper.getCoordinates("g7"));
+
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    //Expected valid moves for a black bishop at g7
+    std::vector<Point> expected = 
+    {
+        Point(5, 5), Point(4, 4), Point(3, 3), Point(2, 2), Point(1,1),Point(5,7),Point(7,5)
+    };
+    
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForBishopGeneric) {
+    std::string pos = "g7";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+   // move black pawn at from g7 to g6
+    board.movePiece(mapper.getCoordinates("g7"), mapper.getCoordinates("g6"));
+    board.movePiece(mapper.getCoordinates("f8"), mapper.getCoordinates("g7"));
+
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+        
+    ExpectedMoves expectedMoves({"f8","h6","f6","e5","d4","c3","b2"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
+
+
+/*
+TEST_F(ChessRulesTest, GenerateValidMovesForWhiteBishopBlocked) {
+    // Place a piece at d2 to block the bishop at c1
+    board.movePiece(mapper.getCoordinates("d7"), mapper.getCoordinates("d2"));
+
+    std::string pos = "c1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    // Expected valid moves for a white bishop at c1 when blocked by a piece at d2
+    std::vector<Point> expected = { Point(1, 2) };
+
+    ASSERT_EQ(moves.size(), expected.size());
+    for (size_t i = 0; i < moves.size(); ++i) {
+        EXPECT_EQ(moves[i], expected[i]);
+    }
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForWhiteBishopCapture) {
+    // Place an opponent's piece at d2 to be captured
+    board.movePiece(mapper.getCoordinates("d7"), mapper.getCoordinates("d2"));
+
+    std::string pos = "c1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    // Expected valid moves for a white bishop at c1 with a capture available at d2
+    std::vector<Point> expected = { Point(1, 2) };
+
+    ASSERT_EQ(moves.size(), expected.size());
+    for (size_t i = 0; i < moves.size(); ++i) {
+        EXPECT_EQ(moves[i], expected[i]);
+    }
+}
+*/
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

@@ -11,6 +11,7 @@
 class Board{
     private:
         std::array<std::array<std::unique_ptr<ChessPiece >, 8>, 8> board;
+
     public:
         Board();
         ~Board();
@@ -20,7 +21,9 @@ class Board{
         void printBoard() const;
         void clearBoard();
         bool InitialiseBoard();
-        
+        bool isWhiteSquare(Point position) const {
+            return (position.x + position.y) % 2 == 0;
+        }
         
 
 };
