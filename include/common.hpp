@@ -60,7 +60,7 @@ public:
     {
         std::vector<std::string> chessPositions;
   
-        std::transform(coordinates.begin(), coordinates.end(),chessPositions.begin(),[this](const Point &point){return this->getChessPosition(point);});
+        std::transform(coordinates.begin(), coordinates.end(),std::back_inserter(chessPositions),[this](const Point &point){return this->getChessPosition(point);});
 
         return chessPositions;
     }
@@ -130,7 +130,7 @@ inline std::map<std::string, Point> initializeStartingPositions() {
 
       explicit ExpectedMoves(const std::vector<std::string>& ea):expected_algebraic(ea){};
 
-        std::vector<Point> getExpectedPoints(ChessboardMapper& mapper) {
+        std::vector<Point> getExpectedPoints(const ChessboardMapper& mapper) const {
             std::vector<Point> expected;
             std::transform(expected_algebraic.begin(), expected_algebraic.end(), std::back_inserter(expected), [&mapper](const std::string& pos) {
                 return mapper.getCoordinates(pos);
