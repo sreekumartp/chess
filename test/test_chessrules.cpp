@@ -719,7 +719,27 @@ TEST_F(ChessRulesTest, GenerateValidMovesForBlackBishopBlocked) {
     ASSERT_EQ(moves.size(), expected.size());
     EXPECT_TRUE(moves.empty());
 }
+TEST_F(ChessRulesTest, GenerateValidMovesForBlackBishopCapture) {
+    // Move white pawn to d5 to be captured
+    board.movePiece(mapper.getCoordinates("d2"), mapper.getCoordinates("d5"));
+    // Move black bishop to c6
+    board.movePiece(mapper.getCoordinates("c8"), mapper.getCoordinates("c6"));
 
+    std::string pos = "c6";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+    
+    ExpectedMoves expectedMoves({"d5", "b5", "a4"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
 TEST_F(ChessRulesTest, GenerateValidMovesForWhiteBishopCapture) {
     board.movePiece(mapper.getCoordinates("d2"), mapper.getCoordinates("d4"));
     // Place an opponent's piece at d2 to be captured
