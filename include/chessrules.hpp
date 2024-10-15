@@ -35,7 +35,9 @@ private:
     std::vector<Point> compute_coordinates_right_down(int x, int y, int max_n);
     // Function to compute the possible moves of a knight
    std::vector<std::vector<Point>> compute_knights_moves(int x, int y, int max_n,bool isWhite);
-    
+    // Function to compute the valid moves of a knight
+   std::vector<Point> compute_knight_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board);
+        
     // Function to compute the possible moves of a pawn
     std::vector<std::vector<Point>>  compute_pawn_moves(int x, int y, int max_n,bool isWhite);
     // Function to compute the valid moves of a pawn
@@ -52,6 +54,8 @@ private:
     std::vector<std::vector<Point>>compute_queen_moves(int x, int y, int max_n,bool isWhite);
     // Function to compute the possible moves of a king
     std::vector<std::vector<Point>> compute_king_moves(int x, int y, int max_n,bool isWhite);
+
+    void AddValidKnightMove(int x, int y, int new_x,int new_y,std::vector<Point>& moves,const Board & board);
 };
 
 #endif // MAIN_H

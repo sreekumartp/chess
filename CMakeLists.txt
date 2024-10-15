@@ -66,7 +66,7 @@ target_link_libraries(test_king ${GTEST_LIBRARIES} pthread)
 target_link_libraries(test_chessboard ${GTEST_LIBRARIES} pthread)
 
 # Add the test to CTest
-add_test(NAME ChessRulesTest COMMAND test_chessrules)
+add_test(NAME ChessRulesTest COMMAND test_chessrules --gtest_output=xml:report.xml)
 add_test(NAME PawnTest COMMAND test_pawn)
 add_test(NAME KnightTest COMMAND test_knight)
 add_test(NAME BishopTest COMMAND test_bishop)

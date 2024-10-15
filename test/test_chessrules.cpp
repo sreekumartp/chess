@@ -761,6 +761,94 @@ TEST_F(ChessRulesTest, GenerateValidMovesForWhiteBishopCapture) {
                                     expected.begin()));
 }
 
+TEST_F(ChessRulesTest, GenerateValidMovesForKnightStartingPosition) {
+    std::string pos = "b1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the knight to the b1 pos of the board
+    //board.movePiece(mapper.getCoordinates("b1"), coordinates);
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+        
+    ExpectedMoves expectedMoves({"a3","c3"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForKnightCenter) {
+    std::string pos = "c3";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the knight to the center of the board
+    board.movePiece(mapper.getCoordinates("b1"), coordinates);
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    ExpectedMoves expectedMoves({"b1","a4","b5","d5","e4"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForKnightCapture) {
+    // Place an opponent's piece at c3 to be captured
+    board.movePiece(mapper.getCoordinates("c7"), mapper.getCoordinates("c3"));
+
+    std::string pos = "b1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    ExpectedMoves expectedMoves({"c3","a3"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+
+    }
+
+
+TEST_F(ChessRulesTest, GenerateValidMovesForKnightBlocked) {
+    // Place a piece at c3 to block the knight at b1
+    board.movePiece(mapper.getCoordinates("c2"), mapper.getCoordinates("c3"));
+
+   // Place a piece at a2 to block the knight at a3
+    board.movePiece(mapper.getCoordinates("a2"), mapper.getCoordinates("a3"));
+
+    std::string pos = "b1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    ExpectedMoves expectedMoves({});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

@@ -184,6 +184,12 @@ if (piecePtr == nullptr) {
         validMoves = compute_bishop_valid_moves(position.x, position.y, 8,piecePtr->getIsWhite(), board);
 
     }
+    else if(dynamic_cast<Knight *>(piecePtr))
+    {
+        std::cout << "Generating valid moves for Knight at position (" << position.x << ", " << position.y << ")" << ' ' << piecePtr->getName() << std::endl;
+        validMoves = compute_knight_valid_moves(position.x, position.y, 8,piecePtr->getIsWhite(), board);
+
+    }
 
 
 return validMoves;
@@ -834,6 +840,101 @@ std::vector<std::vector<Point>> ChessRules::compute_knights_moves(int x, int y, 
     }
     return allmoves;
 }
+
+void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vector<Point>& moves,const Board & board)
+{
+
+    ChessPiece *piecePtr1 = board.getPiece(Point(x,y));
+    if (piecePtr1 != nullptr) {
+        std::cout << "Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
+    }
+     
+    if(new_x>=0 && new_x<=7 && new_y<=7 && new_y >=0)
+    {
+        ChessPiece *piecePtr = board.getPiece({new_x,new_y});
+        if(piecePtr == nullptr)
+        {
+        std::cout << "Adding,Empty position : (" << new_x << ", " << new_y << ")" << std::endl;
+        moves.push_back(Point(new_x,new_y));
+
+        }
+        else
+        { 
+        
+            if (piecePtr1->getIsWhite() != piecePtr->getIsWhite())
+            {
+                //opponent
+            std::cout << "Adding, Opponent Knight found: (" << new_x << ", " << new_y << ")" << std::endl;
+            moves.push_back(Point(new_x,new_y));
+    
+            }
+            else
+            {
+                std::cout << "Friend found at position (" << new_x << ", " << new_y << ")" << std::endl;
+                //friend
+
+            }
+        }
+
+
+    }
+
+
+
+}
+
+ std::vector<Point> ChessRules::compute_knight_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board)
+ {
+
+   std::vector<Point> moves;
+
+    ChessPiece *piecePtr1 = board.getPiece({x,y});
+    if (piecePtr1 != nullptr) {
+        std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
+    }
+     
+    int new_x=0;
+    int new_y=0;
+
+    new_x = x+1, new_y=y+2;
+
+    AddValidKnightMove(x,y,new_x,new_y,moves,board);
+  
+    new_x=x-1, new_y=y-2;
+    AddValidKnightMove(x,y,new_x,new_y,moves,board);
+
+    new_x = x+2, new_y=y+1;
+    AddValidKnightMove(x,y,new_x,new_y,moves,board);
+
+    new_x=x-2, new_y=y-1;
+    AddValidKnightMove(x,y,new_x,new_y,moves,board);
+
+    new_x= x+2, new_y=y-1;
+    AddValidKnightMove(x,y,new_x,new_y,moves,board);
+
+    new_x=x-2, new_y=y+1;
+    AddValidKnightMove(x,y,new_x,new_y,moves,board);
+
+     
+    new_x=x+1, new_y=y-2;
+    AddValidKnightMove(x,y,new_x,new_y,moves,board);
+
+
+    new_x=x-1, new_y=y+2;
+    AddValidKnightMove(x,y,new_x,new_y,moves,board);
+
+
+    for (const auto& move : moves) 
+    {
+        std::cout << "(" << move.x << ", " << move.y << ") ";
+        std::cout << std::endl;
+    }
+
+    return moves;
+
+ }
+
+
 
     // Function to compute the possible moves of a pawn
     std::vector<std::vector<Point>> ChessRules::compute_pawn_moves(int x, int y, int max_n,bool isWhite)
