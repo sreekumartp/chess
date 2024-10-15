@@ -153,8 +153,10 @@
 #include "queen.hpp"
 #include "king.hpp"
 #include <iostream>
+#include <utility>
 
 #define DEBUG 0
+#define DEBUG_LOCAL 0
 
 std::vector<Point> ChessRules::GenerateValidMoves(Point position, const Board & board)
 {
@@ -195,7 +197,7 @@ if (piecePtr == nullptr) {
 return validMoves;
 }
 
-#define DEBUG_LOCAL 0
+
 
 // Function to compute the possible moves of a pawn
 std::vector<Point> ChessRules::compute_pawn_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board)
@@ -864,7 +866,7 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
             if (piecePtr1->getIsWhite() != piecePtr->getIsWhite())
             {
                 //opponent
-            std::cout << "Adding, Opponent Knight found: (" << new_x << ", " << new_y << ")" << std::endl;
+            std::cout << "Adding, Opponent Piece found: (" << new_x << ", " << new_y << ")" << std::endl;
             moves.push_back(Point(new_x,new_y));
     
             }
@@ -896,33 +898,18 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
     int new_x=0;
     int new_y=0;
 
-    new_x = x+1, new_y=y+2;
-
-    AddValidKnightMove(x,y,new_x,new_y,moves,board);
-  
-    new_x=x-1, new_y=y-2;
-    AddValidKnightMove(x,y,new_x,new_y,moves,board);
-
-    new_x = x+2, new_y=y+1;
-    AddValidKnightMove(x,y,new_x,new_y,moves,board);
-
-    new_x=x-2, new_y=y-1;
-    AddValidKnightMove(x,y,new_x,new_y,moves,board);
-
-    new_x= x+2, new_y=y-1;
-    AddValidKnightMove(x,y,new_x,new_y,moves,board);
-
-    new_x=x-2, new_y=y+1;
-    AddValidKnightMove(x,y,new_x,new_y,moves,board);
-
      
-    new_x=x+1, new_y=y-2;
-    AddValidKnightMove(x,y,new_x,new_y,moves,board);
 
+    std::vector<std::pair <int, int>> offsets  ={
+    {1,2},{-1,-2},{2,1},{-2,-1},{2,-1},{-2,1},{1,-2},{-1,2}
+    };
 
-    new_x=x-1, new_y=y+2;
-    AddValidKnightMove(x,y,new_x,new_y,moves,board);
-
+    for(auto offset: offsets)
+    {
+        new_x = x+offset.first;
+        new_y = y+offset.second;
+        AddValidKnightMove(x,y,new_x,new_y,moves,board);
+    }
 
     for (const auto& move : moves) 
     {
