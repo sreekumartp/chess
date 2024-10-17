@@ -849,6 +849,168 @@ TEST_F(ChessRulesTest, GenerateValidMovesForKnightBlocked) {
                                     expected.begin()));
 }
 
+TEST_F(ChessRulesTest, GenerateValidMovesForWhiteRookStartingPosition) {
+    std::string pos = "a1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    // Expected valid moves for a white rook at starting position a1
+    EXPECT_TRUE(moves.empty());
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForWhiteRook) {
+    std::string pos = "a1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the rook to a more central position
+    board.movePiece(mapper.getCoordinates("a1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(mapper.getCoordinates("d4"), board);
+
+    // Expected valid moves for a white rook at d4
+    ExpectedMoves expectedMoves({"a4","b4","c4","e4","f4","g4","h4","d3","d5","d6","d7"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForWhiteRookBlocked) {
+    // Place pieces to block the rook
+   board.movePiece(mapper.getCoordinates("b2"), mapper.getCoordinates("d5"));
+   board.movePiece(mapper.getCoordinates("c2"), mapper.getCoordinates("d3"));
+
+    std::string pos = "a1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the rook to a more central position
+   board.movePiece(mapper.getCoordinates("a1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(mapper.getCoordinates("d4"), board);
+
+    ExpectedMoves expectedMoves({"a4","b4","c4","e4","f4","g4","h4"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForWhiteRookCapture) {
+    // Place an opponent's piece at d5 to be captured
+    board.movePiece(mapper.getCoordinates("a7"), mapper.getCoordinates("d5"));
+
+    std::string pos = "a1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the rook to a more central position
+    board.movePiece(mapper.getCoordinates("a1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(mapper.getCoordinates("d4"), board);
+
+    // Expected valid moves for a white rook at d4 with a capture available at d5
+    ExpectedMoves expectedMoves({"a4","b4","c4","e4","f4","g4","h4","d3","d5"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForBlackRookStartingPosition) {
+    std::string pos = "a8";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(coordinates, board);
+
+    // Expected valid moves for a black rook at starting position a8
+    EXPECT_TRUE(moves.empty());
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForBlackRook) {
+    std::string pos = "a8";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the rook to a more central position
+    board.movePiece(mapper.getCoordinates("a8"), mapper.getCoordinates("d5"));
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(mapper.getCoordinates("d5"), board);
+
+    // Expected valid moves for a black rook at d5
+    ExpectedMoves expectedMoves({"a5","b5","c5","e5","f5","g5","h5","d6","d4","d3","d2"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForBlackRookBlocked) {
+    // Place pieces to block the rook
+    board.movePiece(mapper.getCoordinates("c7"), mapper.getCoordinates("d6"));
+    board.movePiece(mapper.getCoordinates("d7"), mapper.getCoordinates("d4"));
+
+    std::string pos = "a8";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the rook to a more central position
+    board.movePiece(mapper.getCoordinates("a8"), mapper.getCoordinates("d5"));
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(mapper.getCoordinates("d5"), board);
+
+    // Expected valid moves for a black rook at d5 when blocked
+    ExpectedMoves expectedMoves({"a5","b5","c5","e5","f5","g5","h5"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
+                                    expected.begin()));
+}
+
+TEST_F(ChessRulesTest, GenerateValidMovesForBlackRookCapture) {
+    // Place an opponent's piece at d6 to be captured
+    board.movePiece(mapper.getCoordinates("a2"), mapper.getCoordinates("a7"));
+
+    std::string pos = "a8";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    auto moves = rules.GenerateValidMoves(mapper.getCoordinates("a8"), board);
+
+    // Expected valid moves for a black rook at d5 with a capture available at a7
+    ExpectedMoves expectedMoves({"a7"});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
+
+
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), expected.begin()));
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
