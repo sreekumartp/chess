@@ -154,6 +154,7 @@
 #include "king.hpp"
 #include <iostream>
 #include <utility>
+#include <string>
 
 #define DEBUG 0
 #define DEBUG_LOCAL 0
@@ -191,6 +192,12 @@ if (piecePtr == nullptr) {
         std::cout << "Generating valid moves for Knight at position (" << position.x << ", " << position.y << ")" << ' ' << piecePtr->getName() << std::endl;
         validMoves = compute_knight_valid_moves(position.x, position.y, 8,piecePtr->getIsWhite(), board);
 
+    }
+    else if(dynamic_cast<Rook *>(piecePtr))
+    {
+        std::cout << "Generating valid moves for Rook at position (" << position.x << ", " << position.y << ")" << ' ' << piecePtr->getName() << std::endl;
+    // Function to compute the possible moves of a rook
+        validMoves = compute_rook_valid_moves(position.x, position.y,8, piecePtr->getIsWhite() ,board);
     }
 
 
@@ -1053,7 +1060,77 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
  #endif  
         return allmoves;
     }
-    
+
+    void ChessRules::AddValidRookMoves(int x, int y, std::string direction ,std::vector<Point>& moves,const Board & board)
+    {
+        int dx = 0, dy = 0;
+        if (direction == "top") {
+            dy = 1;
+        } else if (direction == "right") {
+            dx = 1;
+        } else if (direction == "down") {
+            dy = -1;
+        } else if (direction == "left") {
+            dx = -1;
+        }
+
+        for (int i = 1; i <= 7; ++i)
+        {
+            int new_x = x + i * dx;
+            int new_y = y + i * dy;
+            if (new_x < 0 || new_x > 7 || new_y < 0 || new_y > 7) {
+                break;
+            }
+
+            ChessPiece *piecePtr = board.getPiece({new_x, new_y});
+            if (piecePtr == nullptr) {
+                std::cout << "Empty, Adding move to (" << new_x << ", " << new_y << ")" << std::endl;
+                moves.push_back(Point(new_x, new_y));
+            } else {
+                std::cout << "Opponent Piece found at position (" << new_x << ", " << new_y << "): " << piecePtr->getName() << ", Color: " << (piecePtr->getIsWhite() ? "White" : "Black") << std::endl;
+                if (piecePtr->getIsWhite() != board.getPiece({x, y})->getIsWhite()) {
+                    moves.push_back(Point(new_x, new_y));
+                }
+                else
+                {
+                    std::cout << "Friend Piece found at position (" << new_x << ", " << new_y << "): " << piecePtr->getName() << ", Color: " << (piecePtr->getIsWhite() ? "White" : "Black") << std::endl;
+
+                }
+                break;
+            }
+        }
+
+        for(auto move: moves)
+        {
+            std::cout << "(" << move.x << ", " << move.y << ") ";
+
+        }
+    }
+
+    // Function to compute the possible moves of a rook
+    std::vector<Point> ChessRules::compute_rook_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board)
+    {
+
+        std::vector<Point> moves;
+        ChessPiece *piecePtr1 = board.getPiece({x,y});
+        if (piecePtr1 != nullptr) {
+             std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
+        }
+
+        std::vector<std::string> directions = {"top","right","down","left"};
+
+
+        for(auto direction:directions)
+        {
+            AddValidRookMoves(x, y,direction, moves, board);
+   
+        }
+        return moves;
+
+    }
+
+
+
     // Function to compute the possible moves of a queen
     std::vector<std::vector<Point>> ChessRules::compute_queen_moves(int x, int y, int max_n,bool isWhite)
     {

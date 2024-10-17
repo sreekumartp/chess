@@ -17,6 +17,11 @@ public:
     bool IsValidMove(Point start, Point end, const Board & board);
 
 private:    
+
+    void AddValidKnightMove(int x, int y, int new_x,int new_y,std::vector<Point>& moves,const Board & board);
+    void AddValidRookMoves(int x, int y, std::string direction ,std::vector<Point>& moves,const Board & board);
+
+
     // Function to compute coordinates vertically up of a given point
     std::vector<Point> compute_coordinates_up(int x, int y, int max_n);
     // Function to compute coordinates vertically down of a given point
@@ -34,9 +39,9 @@ private:
     // Function to compute coordinates to the right and diagonally down of a given point
     std::vector<Point> compute_coordinates_right_down(int x, int y, int max_n);
     // Function to compute the possible moves of a knight
-   std::vector<std::vector<Point>> compute_knights_moves(int x, int y, int max_n,bool isWhite);
+    std::vector<std::vector<Point>> compute_knights_moves(int x, int y, int max_n,bool isWhite);
     // Function to compute the valid moves of a knight
-   std::vector<Point> compute_knight_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board);
+    std::vector<Point> compute_knight_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board);
         
     // Function to compute the possible moves of a pawn
     std::vector<std::vector<Point>>  compute_pawn_moves(int x, int y, int max_n,bool isWhite);
@@ -50,12 +55,14 @@ private:
 
     // Function to compute the possible moves of a rook
     std::vector<std::vector<Point>> compute_rook_moves(int x, int y, int max_n,bool isWhite);
+
+    // Function to compute the possible moves of a rook
+    std::vector<Point> compute_rook_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board);
+
     // Function to compute the possible moves of a queen
     std::vector<std::vector<Point>>compute_queen_moves(int x, int y, int max_n,bool isWhite);
     // Function to compute the possible moves of a king
     std::vector<std::vector<Point>> compute_king_moves(int x, int y, int max_n,bool isWhite);
-
-    void AddValidKnightMove(int x, int y, int new_x,int new_y,std::vector<Point>& moves,const Board & board);
 };
 
 #endif // MAIN_H
