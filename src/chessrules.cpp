@@ -1061,18 +1061,25 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
         return allmoves;
     }
 
-    void ChessRules::AddValidRookMoves(int x, int y, std::string direction ,std::vector<Point>& moves,const Board & board)
-    {
-        int dx = 0, dy = 0;
-        if (direction == "top") {
+   void ChessRules::AddValidRookMoves(int x, int y, Direction direction, std::vector<Point>& moves, const Board & board)
+   {
+
+    int dx=0,dy=0;
+
+    switch (direction) {
+        case Direction::UP:
             dy = 1;
-        } else if (direction == "right") {
+            break;
+        case Direction::RIGHT:
             dx = 1;
-        } else if (direction == "down") {
+            break;
+        case Direction::DOWN:
             dy = -1;
-        } else if (direction == "left") {
+            break;
+        case Direction::LEFT:
             dx = -1;
-        }
+            break;
+    }
 
         for (int i = 1; i <= 7; ++i)
         {
@@ -1087,8 +1094,9 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
                 std::cout << "Empty, Adding move to (" << new_x << ", " << new_y << ")" << std::endl;
                 moves.push_back(Point(new_x, new_y));
             } else {
-                std::cout << "Opponent Piece found at position (" << new_x << ", " << new_y << "): " << piecePtr->getName() << ", Color: " << (piecePtr->getIsWhite() ? "White" : "Black") << std::endl;
                 if (piecePtr->getIsWhite() != board.getPiece({x, y})->getIsWhite()) {
+                    std::cout << "Opponent Piece found at position (" << new_x << ", " << new_y << "): " << piecePtr->getName() << ", Color: " << (piecePtr->getIsWhite() ? "White" : "Black") << std::endl;
+  
                     moves.push_back(Point(new_x, new_y));
                 }
                 else
@@ -1117,9 +1125,7 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
              std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
         }
 
-        std::vector<std::string> directions = {"top","right","down","left"};
-
-
+        std::vector<Direction> directions = {Direction::UP, Direction::RIGHT, Direction::DOWN, Direction::LEFT};
         for(auto direction:directions)
         {
             AddValidRookMoves(x, y,direction, moves, board);

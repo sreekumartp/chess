@@ -7,7 +7,14 @@
 
 
 class ChessRules{
+private:
 
+enum class Direction {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+};
 
 public:
 
@@ -19,7 +26,7 @@ public:
 private:    
 
     void AddValidKnightMove(int x, int y, int new_x,int new_y,std::vector<Point>& moves,const Board & board);
-    void AddValidRookMoves(int x, int y, std::string direction ,std::vector<Point>& moves,const Board & board);
+    void AddValidRookMoves(int x, int y, Direction direction, std::vector<Point>& moves, const Board & board);
 
 
     // Function to compute coordinates vertically up of a given point
