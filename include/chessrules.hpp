@@ -13,7 +13,11 @@ enum class Direction {
     UP,
     RIGHT,
     DOWN,
-    LEFT
+    LEFT,
+    DIAG_RIGHT_UP,
+    DIAG_RIGHT_DOWN,
+    DIAG_LEFT_UP,
+    DIAG_LEFT_DOWN
 };
 
 public:
@@ -27,6 +31,7 @@ private:
 
     void AddValidKnightMove(int x, int y, int new_x,int new_y,std::vector<Point>& moves,const Board & board);
     void AddValidRookMoves(int x, int y, Direction direction, std::vector<Point>& moves, const Board & board);
+    void AddValidQueenMoves(int x, int y, Direction direction, std::vector<Point>& moves, const Board & board);
 
 
     // Function to compute coordinates vertically up of a given point
@@ -68,6 +73,10 @@ private:
 
     // Function to compute the possible moves of a queen
     std::vector<std::vector<Point>>compute_queen_moves(int x, int y, int max_n,bool isWhite);
+    std::vector<Point> compute_queen_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board);
+ 
+
+
     // Function to compute the possible moves of a king
     std::vector<std::vector<Point>> compute_king_moves(int x, int y, int max_n,bool isWhite);
 };
