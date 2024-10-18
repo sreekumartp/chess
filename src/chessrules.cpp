@@ -1089,9 +1089,8 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
             dx = -1;
             break;
         default:
-            std::cerr << "invalid direction for rook" << std::endl;
-            return;
-            
+            assert(false && "Invalid direction for rook");
+            break;
     }
 
         for (int i = 1; i <= 7; ++i)
