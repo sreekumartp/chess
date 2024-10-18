@@ -420,6 +420,10 @@ std::vector<Point> ChessRules::compute_pawn_valid_moves(int x, int y, int max_n,
 
         std::vector<Point> moves;
         ChessPiece *piecePtr1 = board.getPiece({x,y});
+        if (piecePtr1 == nullptr) {
+            std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
+            return {};
+        }
         if (piecePtr1 != nullptr) {
              std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
         }
@@ -891,6 +895,10 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
 {
 
     ChessPiece *piecePtr1 = board.getPiece(Point(x,y));
+    if (piecePtr1 == nullptr) {
+        std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
+    
+    }    
     if (piecePtr1 != nullptr) {
         std::cout << "Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
     }
@@ -935,6 +943,10 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
    std::vector<Point> moves;
 
     ChessPiece *piecePtr1 = board.getPiece({x,y});
+    if (piecePtr1 == nullptr) {
+        std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
+        return {};
+    }
     if (piecePtr1 != nullptr) {
         std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
     }
@@ -1161,6 +1173,11 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
 
         std::vector<Point> moves;
         ChessPiece *piecePtr1 = board.getPiece({x,y});
+        if (piecePtr1 == nullptr) {
+            std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
+            return {};
+        }
+
         if (piecePtr1 != nullptr) {
              std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
         }
@@ -1349,6 +1366,10 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
 
         std::vector<Point> moves;
         ChessPiece *piecePtr1 = board.getPiece({x,y});
+        if (piecePtr1 == nullptr) {
+            std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
+            return {};
+        }
         if (piecePtr1 != nullptr) {
              std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
         }
@@ -1439,6 +1460,10 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
 
         std::vector<Point> moves;
         ChessPiece *piecePtr1 = board.getPiece({x,y});
+        if (piecePtr1 == nullptr) {
+        std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
+        return {};
+        }
         if (piecePtr1 != nullptr) {
              std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
         }
