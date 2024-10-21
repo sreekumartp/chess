@@ -223,37 +223,22 @@ std::vector<Point> ChessRules::ComputePawnValidMoves(int x, int y, int max_n,boo
 {
 
         std::vector<Point> moves;
-    
         ChessPiece *piecePtr1 = board.getPiece({x,y});
         if (piecePtr1 == nullptr) {
-        std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
-        return {};
+            std::cerr << "Error: No piece found at position (" << x << ", " << y << ")" << std::endl;
+            return {};
         }
-        if (piecePtr1 != nullptr) {
+            if (piecePtr1 != nullptr) {
              std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
         }
 
-        if(piecePtr1->getIsWhite())
-        {
-            std::vector<Direction>directions = {Direction::UP,
-            Direction::DIAG_RIGHT_UP,Direction::DIAG_LEFT_UP};
-            for(auto direction:directions)
-            {
-                AddValidPawnMoves(x, y,direction,1, moves, board);
-    
-            }            
+        std::vector<Direction> directions = piecePtr1->getIsWhite()
+            ? std::vector<Direction>{Direction::UP, Direction::DIAG_RIGHT_UP, Direction::DIAG_LEFT_UP}
+            : std::vector<Direction>{Direction::DOWN, Direction::DIAG_RIGHT_DOWN, Direction::DIAG_LEFT_DOWN};
+
+        for (auto dir : directions) {
+            AddValidPawnMoves(x, y, dir, 1, moves, board);
         }
-        else
-        {
-            std::vector<Direction>directions = { Direction::DOWN,
-            Direction::DIAG_LEFT_DOWN,Direction::DIAG_RIGHT_DOWN};
-            for(auto direction:directions)
-            {
-                AddValidPawnMoves(x, y,direction,1, moves, board);
-    
-            }   
-        }
-       
 
        
     return moves;
