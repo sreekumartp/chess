@@ -178,7 +178,6 @@ if (piecePtr == nullptr) {
         // compute the valid move for a  pawn
             std::cout << "Generating valid moves for Pawn at position (" << position.x << ", " << position.y << ")" <<' ' <<piecePtr->getName() <<std::endl;
             // ... generate Pawn-specific moves
-//            validMoves = compute_pawn_valid_moves(position.x, position.y, 2,piecePtr->getIsWhite(), board);
 
             validMoves = ComputePawnValidMoves(position.x, position.y, 2,piecePtr->getIsWhite(), board);
         
