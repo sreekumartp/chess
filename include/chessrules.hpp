@@ -33,6 +33,7 @@ private:
     void AddValidRookMoves(int x, int y, Direction direction, std::vector<Point>& moves, const Board & board);
     void AddValidQueenMoves(int x, int y, Direction direction, std::vector<Point>& moves, const Board & board);
     void AddValidMoves(int x, int y, Direction direction,int max_squares, std::vector<Point>& moves, const Board & board);
+    void AddValidPawnMoves(int x, int y, Direction direction, int max_squares, std::vector<Point>& moves, const Board & board);
 
 
     // Function to compute coordinates vertically up of a given point
@@ -81,7 +82,8 @@ private:
     // Function to compute the possible moves of a king
     std::vector<std::vector<Point>> compute_king_moves(int x, int y, int max_n,bool isWhite);
     std::vector<Point> compute_king_valid_moves(int x, int y, int max_n,bool isWhite,const Board & board);
-     
+    std::vector<Point> ComputePawnValidMoves(int x, int y, int max_n,bool isWhite,const Board & board);
+
 };
 
 #endif // MAIN_H
