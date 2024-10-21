@@ -545,8 +545,12 @@ TEST_F(ChessRulesTest, GenerateValidMovesForPawnBlocked) {
     auto moves = rules.GenerateValidMoves(coordinates, board);
 
     // Expected valid moves for a pawn at a2 when blocked by a pawn at a3
-    EXPECT_TRUE(moves.empty());
+    //EXPECT_TRUE(moves.empty());
+    ExpectedMoves expectedMoves({});
+    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
 
+    ASSERT_EQ(moves.size(), expected.size());
+    EXPECT_TRUE(moves.empty());
 
 }
 
@@ -601,7 +605,8 @@ TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnBlocked) {
     auto moves = rules.GenerateValidMoves(coordinates, board);
 
     // Expected valid moves for a black pawn at a7 when blocked by a pawn at a6
-     EXPECT_TRUE(moves.empty());
+    EXPECT_TRUE(moves.empty());
+
 }
 
 TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnCapture) {
@@ -625,6 +630,7 @@ TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnCapture) {
         
     }
 }
+
 
 TEST_F(ChessRulesTest, GenerateValidMovesForWhiteBishopStartingPosition) {
     std::string pos = "c1";
@@ -1368,7 +1374,6 @@ TEST_F(ChessRulesTest, GenerateValidMovesForBlackKingCapture) {
     EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), 
                                     expected.begin()));
 }
-
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
