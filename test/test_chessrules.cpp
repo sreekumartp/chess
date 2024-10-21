@@ -545,11 +545,6 @@ TEST_F(ChessRulesTest, GenerateValidMovesForPawnBlocked) {
     auto moves = rules.GenerateValidMoves(coordinates, board);
 
     // Expected valid moves for a pawn at a2 when blocked by a pawn at a3
-    //EXPECT_TRUE(moves.empty());
-    ExpectedMoves expectedMoves({});
-    std::vector<Point> expected = expectedMoves.getExpectedPoints(mapper);
-
-    ASSERT_EQ(moves.size(), expected.size());
     EXPECT_TRUE(moves.empty());
 
 }
