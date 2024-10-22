@@ -179,7 +179,7 @@ if (piecePtr == nullptr) {
             std::cout << "Generating valid moves for Pawn at position (" << position.x << ", " << position.y << ")" <<' ' <<piecePtr->getName() <<std::endl;
             // ... generate Pawn-specific moves
 
-            validMoves = ComputePawnValidMoves(position.x, position.y, 2,piecePtr->getIsWhite(), board);
+            validMoves = ComputePawnValidMoves(position.x, position.y, 2,piecePtr->getIsWhite(), true,board);
         
     }
     else if(dynamic_cast<Bishop *>(piecePtr))
@@ -219,7 +219,7 @@ return validMoves;
 }
 
 
-std::vector<Point> ChessRules::ComputePawnValidMoves(int x, int y, int max_n,bool isWhite,const Board & board)
+std::vector<Point> ChessRules::ComputePawnValidMoves(int x, int y, int max_n,bool isWhite,bool evalenPassant, const Board & board)
 {
 
         std::vector<Point> moves;
@@ -232,13 +232,26 @@ std::vector<Point> ChessRules::ComputePawnValidMoves(int x, int y, int max_n,boo
              std::cout << "Selected Piece type: " << piecePtr1->getName() << ", Color: " << (piecePtr1->getIsWhite() ? "White" : "Black") << std::endl;
         }
 
-        std::vector<Direction> directions = piecePtr1->getIsWhite()
+        if(evalenPassant)
+        {
+            std::vector<Direction> directions = piecePtr1->getIsWhite()
+            ? std::vector<Direction>{Direction::UP, Direction::DIAG_RIGHT_UP, Direction::DIAG_LEFT_UP,Direction::LEFT,Direction::RIGHT}
+            : std::vector<Direction>{Direction::DOWN, Direction::DIAG_RIGHT_DOWN, Direction::DIAG_LEFT_DOWN,Direction::RIGHT,Direction::LEFT};
+            for (auto dir : directions) {
+                AddValidPawnMoves(x, y, dir, 1, evalenPassant, moves, board);
+            }
+        }
+        else
+        {
+            std::vector<Direction> directions = piecePtr1->getIsWhite()
             ? std::vector<Direction>{Direction::UP, Direction::DIAG_RIGHT_UP, Direction::DIAG_LEFT_UP}
             : std::vector<Direction>{Direction::DOWN, Direction::DIAG_RIGHT_DOWN, Direction::DIAG_LEFT_DOWN};
-
-        for (auto dir : directions) {
-            AddValidPawnMoves(x, y, dir, 1, moves, board);
+            for (auto dir : directions) {
+                AddValidPawnMoves(x, y, dir, 1, evalenPassant, moves, board);
+            }
         }
+
+
 
        
     return moves;
@@ -1218,7 +1231,7 @@ void ChessRules::AddValidKnightMove(int x, int y, int new_x,int new_y,std::vecto
     }
 
 
-void ChessRules::AddValidPawnMoves(int x, int y, Direction direction, int max_squares, std::vector<Point>& moves, const Board & board)
+void ChessRules::AddValidPawnMoves(int x, int y, Direction direction, int max_squares,bool evalenPassant, std::vector<Point>& moves, const Board & board)
    {
    int dx=0,dy=0;
 
@@ -1252,6 +1265,17 @@ void ChessRules::AddValidPawnMoves(int x, int y, Direction direction, int max_sq
             dy = -1;
             std::cout << "Direction: DIAG_LEFT_DOWN" << std::endl;
             break;
+
+        case Direction::LEFT:
+            dx = -1;
+            std::cout << "Direction: LEFT" << std::endl;
+            break;
+
+        case Direction::RIGHT:
+            dx = 1;
+            std::cout << "Direction: RIGHT" << std::endl;
+            break;
+
         default:
             std::cerr << "invalid direction for queen: " << std::endl;
             return;
@@ -1269,6 +1293,7 @@ void ChessRules::AddValidPawnMoves(int x, int y, Direction direction, int max_sq
             }
 
             ChessPiece *piecePtr = board.getPiece({new_x, new_y});
+
             if (piecePtr == nullptr) {
                 if(direction == Direction::DOWN || direction == Direction::UP)
                 {
@@ -1291,7 +1316,44 @@ void ChessRules::AddValidPawnMoves(int x, int y, Direction direction, int max_sq
 
 
                 }
-            } else {
+            } else if(evalenPassant == true && (direction == Direction::LEFT || direction == Direction::RIGHT) ) {
+
+                bool currPieceWhite = piecePtr1->getIsWhite();
+                bool targPieceWhite = piecePtr->getIsWhite();
+
+
+                if((currPieceWhite== true) && (targPieceWhite == false))
+                {   
+                             
+                    std::cout << "White en Passant" << std::endl;
+                    if(direction==Direction::LEFT)
+                    {
+                        new_y = new_y + 1;
+                    }
+                    else if(direction == Direction::RIGHT)
+                    {
+                        new_y = new_y + 1;
+                    }
+                    moves.push_back(Point(new_x, new_y));
+                }
+                else if((currPieceWhite == false) && (targPieceWhite == true))
+                {
+                    std::cout << "Black en Passant" << std::endl;
+                    if(direction==Direction::LEFT)
+                    {
+                        new_y = new_y - 1;
+                    }
+                    else if(direction == Direction::RIGHT)
+                    {
+                        new_y = new_y - 1;
+                    }                    
+                    moves.push_back(Point(new_x, new_y));
+
+                }
+
+            }
+            
+            else {
                 
 
                     if (piecePtr->getIsWhite() != board.getPiece({x, y})->getIsWhite())
