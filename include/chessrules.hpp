@@ -25,7 +25,7 @@ public:
     std::vector<std:: vector<Point>> GenerateMoves(Point position, const Board & board);
     std::vector<Point> GenerateValidMoves(Point position, const Board & board);
 
-    bool IsValidMove(Point start, Point end, const Board & board);
+    bool IsValidMove(Point start, Point end, Board & board);
 
 private:    
 
