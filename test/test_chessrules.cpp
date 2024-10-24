@@ -1551,6 +1551,238 @@ TEST_F(ChessRulesTest, GenerateValidMovesForBlackPawnEnPassantBlocked) {
     ASSERT_EQ(moves.size(), expected.size());
     EXPECT_TRUE(std::is_permutation(moves.begin(), moves.end(), expected.begin()));
 }
+TEST_F(ChessRulesTest, IsValidMoveForPawn) {
+    std::string pos = "a2";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    // Validate basic moves for a pawn at a2
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("a2"), mapper.getCoordinates("a3"), board));
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("a3"), mapper.getCoordinates("a4"), board));
+    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("a4"),mapper.getCoordinates("b5"), board));
+    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("a5"),mapper.getCoordinates("a6"), board));
+    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("a4"),mapper.getCoordinates("b3"), board));
+
+}
+
+
+TEST_F(ChessRulesTest, IsValidMoveForRook) {
+    std::string pos = "a1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the rook to a more central position
+    board.movePiece(mapper.getCoordinates("a1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    // Validate basic moves for a rook at d4
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d5"), board));
+  //  EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d6"), board));
+  //  EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d7"), board));
+  //  EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d8"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForKnight) {
+    std::string pos = "b1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    // Validate basic moves for a knight at b1
+    EXPECT_TRUE(rules.IsValidMove(coordinates, Point(2, 2), board));
+ //   EXPECT_TRUE(rules.IsValidMove(coordinates, Point(0, 2), board));
+ //   EXPECT_FALSE(rules.IsValidMove(coordinates, Point(1, 3), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForBishop) {
+    std::string pos = "c1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the bishop to a more central position
+    board.movePiece(mapper.getCoordinates("c1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    // Validate basic moves for a bishop at d4
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("e5"), board));
+//    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("f6"), board));
+//    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d5"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForQueen) {
+    std::string pos = "d1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the queen to a more central position
+    board.movePiece(mapper.getCoordinates("d1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    // Validate basic moves for a queen at d4
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d5"), board));
+//    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("e5"), board));
+//    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d8"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForKing) {
+    std::string pos = "e1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the king to a more central position
+    board.movePiece(mapper.getCoordinates("e1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    // Validate basic moves for a king at d4
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d5"), board));
+//    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("e5"), board));
+//    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d6"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForPawnEnPassant) {
+    // Move white pawn to e5
+    board.movePiece(mapper.getCoordinates("e2"), mapper.getCoordinates("e5"));
+    // Move black pawn to d5
+    board.movePiece(mapper.getCoordinates("d7"), mapper.getCoordinates("d5"));
+
+    std::string pos = "e5";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    // Validate en passant move for a white pawn at e5
+    EXPECT_TRUE(rules.IsValidMove(coordinates, mapper.getCoordinates("d6"), board));
+//    EXPECT_FALSE(rules.IsValidMove(coordinates, mapper.getCoordinates("d7"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForBlackPawnEnPassant) {
+    // Move black pawn to e4
+    board.movePiece(mapper.getCoordinates("e7"), mapper.getCoordinates("e4"));
+    // Move white pawn to d4
+    board.movePiece(mapper.getCoordinates("d2"), mapper.getCoordinates("d4"));
+
+    std::string pos = "e4";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    // Validate en passant move for a black pawn at e4
+    EXPECT_TRUE(rules.IsValidMove(coordinates, mapper.getCoordinates("d3"), board));
+//    EXPECT_FALSE(rules.IsValidMove(coordinates, mapper.getCoordinates("d2"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForPawnCapture) {
+    // Place an opponent's piece at b3 to be captured
+    board.movePiece(mapper.getCoordinates("b7"), mapper.getCoordinates("b3"));
+
+    std::string pos = "a2";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    // Validate capture move for a pawn at a2
+    EXPECT_TRUE(rules.IsValidMove(coordinates, Point(1, 2), board));
+//    EXPECT_FALSE(rules.IsValidMove(coordinates, Point(1, 3), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForRookCapture) {
+    // Place an opponent's piece at d5 to be captured
+    board.movePiece(mapper.getCoordinates("a7"), mapper.getCoordinates("d5"));
+
+    std::string pos = "a1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the rook to a more central position
+    board.movePiece(mapper.getCoordinates("a1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    // Validate capture move for a rook at d4
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d5"), board));
+//    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d6"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForKnightCapture) {
+    // Place an opponent's piece at c3 to be captured
+    board.movePiece(mapper.getCoordinates("c7"), mapper.getCoordinates("c3"));
+
+    std::string pos = "b1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    board.printBoard();
+
+    // Validate capture move for a knight at b1
+    EXPECT_TRUE(rules.IsValidMove(coordinates, Point(2, 2), board));
+//    EXPECT_FALSE(rules.IsValidMove(coordinates, Point(1, 3), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForBishopCapture) {
+    // Place an opponent's piece at e5 to be captured
+    board.movePiece(mapper.getCoordinates("e7"), mapper.getCoordinates("e5"));
+
+    std::string pos = "c1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the bishop to a more central position
+    board.movePiece(mapper.getCoordinates("c1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    // Validate capture move for a bishop at d4
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("e5"), board));
+//    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("f6"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForQueenCapture) {
+    // Place an opponent's piece at d5 to be captured
+    board.movePiece(mapper.getCoordinates("d7"), mapper.getCoordinates("d5"));
+
+    std::string pos = "d1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the queen to a more central position
+    board.movePiece(mapper.getCoordinates("d1"), mapper.getCoordinates("d4"));
+
+    board.printBoard();
+
+    // Validate capture move for a queen at d4
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d5"), board));
+//    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("d4"), mapper.getCoordinates("d6"), board));
+}
+
+TEST_F(ChessRulesTest, IsValidMoveForKingCapture) {
+    // Place an opponent's piece at d5 to be captured
+    board.movePiece(mapper.getCoordinates("d7"), mapper.getCoordinates("d5"));
+
+    std::string pos = "e1";
+    Point coordinates = mapper.getCoordinates(pos);
+    std::cout << pos << " -> (" << coordinates.x << ", " << coordinates.y << ")" << std::endl;
+
+    // Move the king to a more central position
+    board.movePiece(mapper.getCoordinates("e1"), mapper.getCoordinates("e4"));
+
+    board.printBoard();
+
+    // Validate capture move for a king at e4
+    EXPECT_TRUE(rules.IsValidMove(mapper.getCoordinates("e4"), mapper.getCoordinates("d5"), board));
+//    EXPECT_FALSE(rules.IsValidMove(mapper.getCoordinates("e4"), mapper.getCoordinates("d6"), board));
+}
+
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

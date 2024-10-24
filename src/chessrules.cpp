@@ -695,10 +695,43 @@ std::vector<std:: vector<Point>> ChessRules:: GenerateMoves(Point position, cons
     return allmoves;
 }
 
-bool ChessRules::IsValidMove(Point start, Point end, const Board & board)
+bool ChessRules::IsValidMove(Point start, Point target, Board & board)
 {
+    std::vector<Point> validMoves;
     
+    validMoves= GenerateValidMoves(start,board);
+
+    auto it = std::find(validMoves.begin(),validMoves.end(),target);
+
+    if (it !=validMoves.end())
+    {
+            std::cout << "Valid move found from (" << start.x << ", " << start.y << ") to (" << target.x << ", " << target.y << ")" << std::endl;
+            ChessPiece* startPiece = board.getPiece(start);
+            ChessPiece* targetPiece = board.getPiece(target);
+                if (startPiece != nullptr) {
+                    std::cout << "Piece at start position (" << start.x << ", " << start.y << "): " << startPiece->getName() << ", Color: " << (startPiece->getIsWhite() ? "White" : "Black") << std::endl;
+                }
+                if (targetPiece != nullptr) {
+                    std::cout << "Piece at target position (" << target.x << ", " << target.y << "): " << targetPiece->getName() << ", Color: " << (targetPiece->getIsWhite() ? "White" : "Black") << std::endl;
+                }
+                else{
+                    std::cout << "No piece at target position (" << target.x << ", " << target.y << ")" << std::endl;
+                }
+              // Move the piece from start to target
+            board.movePiece(start,target);    
+            std::cout << "Moved piece from (" << start.x << ", " << start.y << ") to (" << target.x << ", " << target.y << ")" << std::endl;
+
+            return true;
+    }
+    else
+    {
+            std::cout << "Invalid move from (" << start.x << ", " << start.y << ") to (" << target.x << ", " << target.y << ")" << std::endl;
+            
+     }
+
+  
     return false;
+    
 };
 
 // Function to compute coordinates vertically up of a given point

@@ -144,7 +144,7 @@ void Board::setPiece(std::unique_ptr<ChessPiece> piece) {
     board[x][y] = std::move(piece);
 }
 
-void Board::movePiece(Point start, Point end) {
+void Board::movePiece(Point start, Point end){
     std::unique_ptr<ChessPiece> piece;
     piece = std::move(board[start.x][start.y]);
 
