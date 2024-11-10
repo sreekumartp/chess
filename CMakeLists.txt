@@ -34,8 +34,6 @@ set_target_properties(gtest PROPERTIES COMPILE_FLAGS "-Wno-error")
 # Add the executable
 add_executable(chess src/main.cpp src/chessboard.cpp src/chessrules.cpp src/chesspiece.cpp src/pawn.cpp src/knight.cpp src/bishop.cpp src/rook.cpp src/queen.cpp src/king.cpp)
 
-add_subdirectory(chessstatemachine)
-
 # target_link_libraries(chess libchessstatemachine)
 
 
